@@ -19,12 +19,13 @@ namespace Monopoly
         private static Form_board instance;
         public Form_board()
         {
-            // To remove flickering
-            this.DoubleBuffered = true;
             foreach (var file in dice_images_directory.GetFiles("*.png"))
             {
                 dice_images.Add(Image.FromFile(file.FullName));
             }
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+
             InitializeComponent();
         }
 
@@ -118,53 +119,54 @@ namespace Monopoly
         {
             if (index == 20)
             {
-                int tempX = ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
-                int tempY = ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
+                int tempX = ((drawPanel_plateau.Size.Width / 10) / 2) - (jetons[jetonColor][2]);
+                int tempY = ((drawPanel_plateau.Size.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index == 30)
             {
-                int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
-                int tempY = ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
+                int tempX = drawPanel_plateau.Size.Width - ((drawPanel_plateau.Size.Width / 10) / 2) - (jetons[jetonColor][2]);
+                int tempY = ((drawPanel_plateau.Size.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index == 0)
             {
-                int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
-                int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
+                int tempX = drawPanel_plateau.Size.Width - ((drawPanel_plateau.Size.Width / 10) / 2) - (jetons[jetonColor][2]);
+                int tempY = drawPanel_plateau.Size.Height - ((drawPanel_plateau.Size.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index == 10)
             {
-                int tempX = ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
-                int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
+                int tempX = ((drawPanel_plateau.Size.Width / 10) / 2) - (jetons[jetonColor][2]);
+                int tempY = drawPanel_plateau.Size.Height - ((drawPanel_plateau.Size.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index < 10)
             {
-                int tempX = this.ClientSize.Width - ((index + 1) * (this.ClientSize.Width / 12) + ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]));
-                int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
+                int tempX = drawPanel_plateau.Size.Width - ((index + 1) * (drawPanel_plateau.Size.Width / 12) + ((drawPanel_plateau.Size.Width / 12) / 2) - (jetons[jetonColor][2]));
+                int tempY = drawPanel_plateau.Size.Height - ((drawPanel_plateau.Size.Height / 12) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index < 20)
             {
-                int tempX = ((this.ClientSize.Width / 12) / 2) - jetons[jetonColor][2];
-                int tempY = this.ClientSize.Height - ((index + 1 - 10) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 13) / 2) - (jetons[jetonColor][2]));
+                int tempX = ((drawPanel_plateau.Size.Width / 12) / 2) - jetons[jetonColor][2];
+                int tempY = drawPanel_plateau.Size.Height - ((index + 1 - 10) * (drawPanel_plateau.Size.Height / 12) + ((drawPanel_plateau.Size.Height / 13) / 2) - (jetons[jetonColor][2]));
                 tempY -= 5;
+                tempX += 15;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index < 30)
             {
-                int tempX = ((index + 1 - 20) * (this.ClientSize.Width / 12)) + ((this.ClientSize.Width / 12)/2) - (jetons[jetonColor][2]);
-                tempX -= 15;
-                int tempY = ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
-                tempY += 5;
+                int tempX = ((index + 1 - 20) * (drawPanel_plateau.Size.Width / 12)) + ((drawPanel_plateau.Size.Width / 12)/2) - (jetons[jetonColor][2]);
+                tempX -= 20;
+                int tempY = ((drawPanel_plateau.Size.Height / 12) / 2) - (jetons[jetonColor][2]);
+                tempY += 10;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }else if  (index < 40)
             {
-                int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]);
-                int tempY = (index + 1 - 30) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
-                tempY -= 10;
+                int tempX = drawPanel_plateau.Size.Width - ((drawPanel_plateau.Size.Width / 12) / 2) - (jetons[jetonColor][2]);
+                int tempY = (index + 1 - 30) * (drawPanel_plateau.Size.Height / 12) + ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
+                tempY -= 15;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
         }
@@ -174,21 +176,13 @@ namespace Monopoly
 
             while (index < 40)
             {
-                /*
-                setJetonIndex(Color.DarkOrange, index + 1);
-                setJetonIndex(Color.MediumTurquoise, index + 2);
-                setJetonIndex(Color.MediumSeaGreen, index + 3);
-                setJetonIndex(Color.Gold, index + 4);
-                setJetonIndex(Color.RoyalBlue, index + 5);
-                setJetonIndex(Color.LightPink, index + 6);
-                */
                 setJetonIndex(Color.DarkOrange, index);
                 setJetonIndex(Color.MediumTurquoise, index);
                 setJetonIndex(Color.MediumSeaGreen, index);
                 setJetonIndex(Color.Gold, index);
                 setJetonIndex(Color.RoyalBlue, index);
                 setJetonIndex(Color.LightPink, index);
-                Thread.Sleep(400);
+                Thread.Sleep(100);
                 index++;
                 if (index == 40)
                 {
@@ -197,29 +191,86 @@ namespace Monopoly
             }
         }
 
-
-        private void Form_main_Click(object sender, EventArgs e)
+        public void insert_console(string message)
         {
-            //test();
-            //showDices(2, 3)
-            Form_actions.GetInstance.Show();
-    }
+            this.listBox_console.Items.Add(this.textBox_commande.Text);
+            this.listBox_console.SelectedIndex = listBox_console.Items.Count - 1;
+            this.listBox_console.SelectedIndex = -1;
+        }
 
-        //OnPaint event
-        private void Form_main_Paint(object sender, PaintEventArgs e)
+        private void handle_commande(string commande)
         {
-
-            foreach (KeyValuePair<Color, int[]> entry in jetons)
+            int i = 0;
+            if (commande == "q")
             {
-
-                e.Graphics.FillEllipse(new SolidBrush(entry.Key), entry.Value[0], entry.Value[1], entry.Value[2], entry.Value[2]);
+                this.Close();
             }
+            else if (int.TryParse(commande, out i))
+            {
+                Form_board.GetInstance.setJetonIndex(Color.Gold, i);
+            }
+            insert_console(commande);
         }
 
         private void Form_main_Resize(object sender, EventArgs e)
         {
-            setJetonIndex(Color.Gold, index);
-            ((Control)sender).Refresh();
+            drawPanel_plateau.Height = this.ClientSize.Height;
+            drawPanel_plateau.Width = drawPanel_plateau.Height;
+            drawPanel_plateau.Location = new Point(
+                this.ClientSize.Width / 2 - drawPanel_plateau.Size.Width / 2,
+                this.ClientSize.Height / 2 - drawPanel_plateau.Size.Height / 2);
+            foreach (KeyValuePair<Color, int[]> entry in jetons)
+            {
+                setJetonIndex(entry.Key, 0);
+            }
+        }
+
+        private void drawPanel_plateau_Paint(object sender, PaintEventArgs e)
+        {
+            foreach (KeyValuePair<Color, int[]> entry in jetons)
+            {
+                e.Graphics.FillEllipse(new SolidBrush(entry.Key), entry.Value[0], entry.Value[1], entry.Value[2], entry.Value[2]);
+            }
+        }
+
+        private void drawPanel_plateau_SizeChanged(object sender, EventArgs e)
+        {
+            panel_control.Location = new Point(drawPanel_plateau.Location.X + drawPanel_plateau.Size.Width);
+            panel_control.Width = (this.ClientSize.Width - drawPanel_plateau.Size.Width) / 2 - 35;
+        }
+
+        private void button_out_of_jail_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_mortage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_trade_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_end_turn_Click(object sender, EventArgs e)
+        {
+            test();
+        }
+
+        private void button_roll_dice_Click(object sender, EventArgs e)
+        {
+            showDices(2, 3);
+        }
+
+        private void textBox_commande_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                handle_commande(textBox_commande.Text);
+                textBox_commande.Text = "";
+            }
         }
     }
 }
