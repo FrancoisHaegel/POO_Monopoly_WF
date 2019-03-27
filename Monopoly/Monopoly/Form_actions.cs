@@ -12,9 +12,22 @@ namespace Monopoly
 {
     public partial class Form_actions : Form
     {
+        private static Form_actions instance;
         public Form_actions()
         {
             InitializeComponent();
+        }
+
+        public static Form_actions GetInstance
+        {
+            get
+            {
+                if (instance == null || instance.IsDisposed)
+                {
+                    instance = new Form_actions();
+                }
+                return instance;
+            }
         }
 
         public void insert_console(string message)
@@ -26,6 +39,14 @@ namespace Monopoly
 
         private void handle_commande(string commande)
         {
+            int i = 0;
+            if(commande == "q")
+            {
+                this.Close();
+            }else if(int.TryParse(commande, out i))
+            {
+                Form_board.GetInstance.setJetonIndex(Color.Gold, i);
+            }
             insert_console(commande);
         }
 

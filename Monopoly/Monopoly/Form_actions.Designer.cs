@@ -36,7 +36,7 @@
             // 
             this.textBox_commande.Location = new System.Drawing.Point(12, 180);
             this.textBox_commande.Name = "textBox_commande";
-            this.textBox_commande.Size = new System.Drawing.Size(337, 20);
+            this.textBox_commande.Size = new System.Drawing.Size(289, 20);
             this.textBox_commande.TabIndex = 0;
             this.textBox_commande.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
@@ -46,18 +46,22 @@
             this.listBox_console.FormattingEnabled = true;
             this.listBox_console.Location = new System.Drawing.Point(12, 12);
             this.listBox_console.Name = "listBox_console";
-            this.listBox_console.Size = new System.Drawing.Size(337, 160);
+            this.listBox_console.Size = new System.Drawing.Size(289, 160);
             this.listBox_console.TabIndex = 1;
             // 
             // Form_actions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 450);
+            this.ClientSize = new System.Drawing.Size(313, 450);
             this.Controls.Add(this.listBox_console);
             this.Controls.Add(this.textBox_commande);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(0, 22);
             this.Name = "Form_actions";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form_actions";
             this.ResumeLayout(false);
             this.PerformLayout();

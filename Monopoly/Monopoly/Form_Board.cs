@@ -16,13 +16,7 @@ namespace Monopoly
 {
     public partial class Form_board : Form 
     {
-        private Graphics g;
-        DirectoryInfo dice_images_directory = new DirectoryInfo(".\\Resources\\");
-        List<Image> dice_images = new List<Image>();
-
-
-    int index = 0;
-
+        private static Form_board instance;
         public Form_board()
         {
             // To remove flickering
@@ -34,6 +28,23 @@ namespace Monopoly
             InitializeComponent();
         }
 
+        public static Form_board GetInstance
+        {
+            get
+            {
+                if (instance == null || instance.IsDisposed)
+                {
+                    instance = new Form_board();
+                }
+                return instance;
+            }
+        }
+
+        private Graphics g;
+        DirectoryInfo dice_images_directory = new DirectoryInfo(".\\Resources\\");
+        List<Image> dice_images = new List<Image>();
+        int index = 0;
+        
         // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
         Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>()
         {
@@ -105,25 +116,25 @@ namespace Monopoly
 
         public void setJetonIndex(Color jetonColor, int index)
         {
-            if (index == 0)
+            if (index == 20)
             {
                 int tempX = ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
                 int tempY = ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
-            else if (index == 10)
+            else if (index == 30)
             {
                 int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
                 int tempY = ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
-            else if (index == 20)
+            else if (index == 0)
             {
                 int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
                 int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
-            else if (index == 30)
+            else if (index == 10)
             {
                 int tempX = ((this.ClientSize.Width / 10) / 2) - (jetons[jetonColor][2]);
                 int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 10) / 2) - (jetons[jetonColor][2]);
@@ -131,29 +142,29 @@ namespace Monopoly
             }
             else if (index < 10)
             {
-                int tempX = ((index + 1) * (this.ClientSize.Width / 12)) + ((this.ClientSize.Width / 12)/2) - (jetons[jetonColor][2]);
-                tempX -= 15;
-                int tempY = ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
-                tempY += 5;
+                int tempX = this.ClientSize.Width - ((index + 1) * (this.ClientSize.Width / 12) + ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]));
+                int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
-            }else if  (index < 20)
+            }
+            else if (index < 20)
             {
-                int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]);
-                int tempY = (index + 1 - 10) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
-                tempY -= 10;
+                int tempX = ((this.ClientSize.Width / 12) / 2) - jetons[jetonColor][2];
+                int tempY = this.ClientSize.Height - ((index + 1 - 10) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 13) / 2) - (jetons[jetonColor][2]));
+                tempY -= 5;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
             else if (index < 30)
             {
-                int tempX = this.ClientSize.Width - ((index + 1 - 20) * (this.ClientSize.Width / 12) + ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]));
-                int tempY = this.ClientSize.Height - ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
+                int tempX = ((index + 1 - 20) * (this.ClientSize.Width / 12)) + ((this.ClientSize.Width / 12)/2) - (jetons[jetonColor][2]);
+                tempX -= 15;
+                int tempY = ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
+                tempY += 5;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
-            }
-            else if (index < 40)
+            }else if  (index < 40)
             {
-                int tempX = ((this.ClientSize.Width / 12) / 2) - jetons[jetonColor][2];
-                int tempY = this.ClientSize.Height - ((index + 1 - 30) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 13) / 2) - (jetons[jetonColor][2]));
-                tempY -= 5;
+                int tempX = this.ClientSize.Width - ((this.ClientSize.Width / 12) / 2) - (jetons[jetonColor][2]);
+                int tempY = (index + 1 - 30) * (this.ClientSize.Height / 12) + ((this.ClientSize.Height / 12) / 2) - (jetons[jetonColor][2]);
+                tempY -= 10;
                 setJetonPosition(jetonColor, tempX, tempY, jetons[jetonColor][2]);
             }
         }
@@ -191,8 +202,7 @@ namespace Monopoly
         {
             //test();
             //showDices(2, 3)
-            Form_actions actions = new Form_actions();
-            actions.Show();
+            Form_actions.GetInstance.Show();
     }
 
         //OnPaint event
