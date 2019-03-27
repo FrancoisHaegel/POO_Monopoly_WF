@@ -1,6 +1,6 @@
 ﻿namespace Monopoly
 {
-    partial class Form1
+    partial class Form_board
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -28,9 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_board));
+            this.SuspendLayout();
+            // 
+            // Form_board
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(684, 684);
+            this.Name = "Form_board";
+            this.Text = "MONOPOLY";
+            this.Click += new System.EventHandler(this.Form_main_Click);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form_main_Paint);
+            this.Resize += new System.EventHandler(this.Form_main_Resize);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

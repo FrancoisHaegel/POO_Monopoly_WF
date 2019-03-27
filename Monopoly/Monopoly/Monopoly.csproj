@@ -46,14 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Form_actions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Form_actions.Designer.cs">
+      <DependentUpon>Form_actions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Board.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Board.Designer.cs">
+      <DependentUpon>Form_Board.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Popup_dices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_dices.Designer.cs">
+      <DependentUpon>Popup_dices.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_actions.resx">
+      <DependentUpon>Form_actions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Board.resx">
+      <DependentUpon>Form_Board.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_dices.resx">
+      <DependentUpon>Popup_dices.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,6 +96,26 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dice_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\dice_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\dice_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\dice_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\dice_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\dice_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
