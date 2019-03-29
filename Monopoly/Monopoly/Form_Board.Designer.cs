@@ -29,56 +29,79 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_board));
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.drawPanel_plateau = new Monopoly.DrawPanel();
-            this.button_roll_dice = new System.Windows.Forms.Button();
-            this.button_mortage = new System.Windows.Forms.Button();
+            this.drawPanel_player = new Monopoly.DrawPanel();
+            this.panel_control = new Monopoly.DrawPanel();
+            this.button_out_of_jail = new System.Windows.Forms.Button();
+            this.textBox_commande = new System.Windows.Forms.TextBox();
             this.button_trade = new System.Windows.Forms.Button();
             this.button_end_turn = new System.Windows.Forms.Button();
-            this.button_out_of_jail = new System.Windows.Forms.Button();
+            this.button_mortage = new System.Windows.Forms.Button();
+            this.button_roll_dice = new System.Windows.Forms.Button();
             this.listBox_console = new System.Windows.Forms.ListBox();
-            this.textBox_commande = new System.Windows.Forms.TextBox();
-            this.panel_control = new Monopoly.DrawPanel();
+            this.drawPanel_plateau = new Monopoly.DrawPanel();
             this.panel_control.SuspendLayout();
             this.SuspendLayout();
             // 
-            // drawPanel_plateau
+            // drawPanel_player
             // 
-            this.drawPanel_plateau.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("drawPanel_plateau.BackgroundImage")));
-            this.drawPanel_plateau.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.drawPanel_plateau.Location = new System.Drawing.Point(165, 0);
-            this.drawPanel_plateau.Name = "drawPanel_plateau";
-            this.drawPanel_plateau.Size = new System.Drawing.Size(442, 443);
-            this.drawPanel_plateau.TabIndex = 0;
-            this.drawPanel_plateau.SizeChanged += new System.EventHandler(this.drawPanel_plateau_SizeChanged);
-            this.drawPanel_plateau.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_plateau_Paint);
+            this.drawPanel_player.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.drawPanel_player.BackColor = System.Drawing.Color.Transparent;
+            this.drawPanel_player.Location = new System.Drawing.Point(13, 13);
+            this.drawPanel_player.Margin = new System.Windows.Forms.Padding(0);
+            this.drawPanel_player.Name = "drawPanel_player";
+            this.drawPanel_player.Size = new System.Drawing.Size(146, 414);
+            this.drawPanel_player.TabIndex = 9;
+            this.drawPanel_player.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_player_Paint);
+            this.drawPanel_player.MouseClick += new System.Windows.Forms.MouseEventHandler(this.drawPanel_player_MouseClick);
+            this.drawPanel_player.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPanel_player_MouseMove);
             // 
-            // button_roll_dice
+            // panel_control
             // 
-            this.button_roll_dice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_roll_dice.BackColor = System.Drawing.SystemColors.Control;
-            this.button_roll_dice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_roll_dice.Location = new System.Drawing.Point(76, 392);
-            this.button_roll_dice.Name = "button_roll_dice";
-            this.button_roll_dice.Size = new System.Drawing.Size(75, 23);
-            this.button_roll_dice.TabIndex = 1;
-            this.button_roll_dice.Text = "ROLL DICE";
-            this.button_roll_dice.UseVisualStyleBackColor = false;
-            this.button_roll_dice.Click += new System.EventHandler(this.button_roll_dice_Click);
+            this.panel_control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_control.BackColor = System.Drawing.Color.Transparent;
+            this.panel_control.Controls.Add(this.button_out_of_jail);
+            this.panel_control.Controls.Add(this.textBox_commande);
+            this.panel_control.Controls.Add(this.button_trade);
+            this.panel_control.Controls.Add(this.button_end_turn);
+            this.panel_control.Controls.Add(this.button_mortage);
+            this.panel_control.Controls.Add(this.button_roll_dice);
+            this.panel_control.Controls.Add(this.listBox_console);
+            this.panel_control.Location = new System.Drawing.Point(613, 12);
+            this.panel_control.Name = "panel_control";
+            this.panel_control.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.panel_control.Size = new System.Drawing.Size(159, 418);
+            this.panel_control.TabIndex = 8;
             // 
-            // button_mortage
+            // button_out_of_jail
             // 
-            this.button_mortage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_mortage.BackColor = System.Drawing.SystemColors.Control;
-            this.button_mortage.Enabled = false;
-            this.button_mortage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_mortage.Location = new System.Drawing.Point(3, 363);
-            this.button_mortage.Name = "button_mortage";
-            this.button_mortage.Size = new System.Drawing.Size(85, 23);
-            this.button_mortage.TabIndex = 2;
-            this.button_mortage.Text = "MORTGAGE";
-            this.button_mortage.UseVisualStyleBackColor = false;
-            this.button_mortage.Click += new System.EventHandler(this.button_mortage_Click);
+            this.button_out_of_jail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_out_of_jail.BackColor = System.Drawing.SystemColors.Control;
+            this.button_out_of_jail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_out_of_jail.Location = new System.Drawing.Point(3, 334);
+            this.button_out_of_jail.Name = "button_out_of_jail";
+            this.button_out_of_jail.Size = new System.Drawing.Size(148, 23);
+            this.button_out_of_jail.TabIndex = 5;
+            this.button_out_of_jail.Text = "GET OUT OF JAIL";
+            this.button_out_of_jail.UseVisualStyleBackColor = false;
+            this.button_out_of_jail.Click += new System.EventHandler(this.button_out_of_jail_Click);
+            // 
+            // textBox_commande
+            // 
+            this.textBox_commande.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox_commande.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox_commande.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_commande.Location = new System.Drawing.Point(3, 308);
+            this.textBox_commande.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.textBox_commande.MinimumSize = new System.Drawing.Size(0, 20);
+            this.textBox_commande.Name = "textBox_commande";
+            this.textBox_commande.Size = new System.Drawing.Size(148, 14);
+            this.textBox_commande.TabIndex = 7;
+            this.textBox_commande.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_commande_KeyPress);
             // 
             // button_trade
             // 
@@ -107,61 +130,55 @@
             this.button_end_turn.UseVisualStyleBackColor = false;
             this.button_end_turn.Click += new System.EventHandler(this.button_end_turn_Click);
             // 
-            // button_out_of_jail
+            // button_mortage
             // 
-            this.button_out_of_jail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_out_of_jail.BackColor = System.Drawing.SystemColors.Control;
-            this.button_out_of_jail.Enabled = false;
-            this.button_out_of_jail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_out_of_jail.Location = new System.Drawing.Point(3, 334);
-            this.button_out_of_jail.Name = "button_out_of_jail";
-            this.button_out_of_jail.Size = new System.Drawing.Size(153, 23);
-            this.button_out_of_jail.TabIndex = 5;
-            this.button_out_of_jail.Text = "GET OUT OF JAIL";
-            this.button_out_of_jail.UseVisualStyleBackColor = false;
-            this.button_out_of_jail.Click += new System.EventHandler(this.button_out_of_jail_Click);
+            this.button_mortage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_mortage.BackColor = System.Drawing.SystemColors.Control;
+            this.button_mortage.Enabled = false;
+            this.button_mortage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_mortage.Location = new System.Drawing.Point(3, 363);
+            this.button_mortage.Name = "button_mortage";
+            this.button_mortage.Size = new System.Drawing.Size(85, 23);
+            this.button_mortage.TabIndex = 2;
+            this.button_mortage.Text = "MORTGAGE";
+            this.button_mortage.UseVisualStyleBackColor = false;
+            this.button_mortage.Click += new System.EventHandler(this.button_mortage_Click);
+            // 
+            // button_roll_dice
+            // 
+            this.button_roll_dice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_roll_dice.BackColor = System.Drawing.SystemColors.Control;
+            this.button_roll_dice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_roll_dice.Location = new System.Drawing.Point(76, 392);
+            this.button_roll_dice.Name = "button_roll_dice";
+            this.button_roll_dice.Size = new System.Drawing.Size(75, 23);
+            this.button_roll_dice.TabIndex = 1;
+            this.button_roll_dice.Text = "ROLL DICE";
+            this.button_roll_dice.UseVisualStyleBackColor = false;
+            this.button_roll_dice.Click += new System.EventHandler(this.button_roll_dice_Click);
             // 
             // listBox_console
             // 
             this.listBox_console.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox_console.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.listBox_console.FormattingEnabled = true;
+            this.listBox_console.BackColor = System.Drawing.Color.Salmon;
+            this.listBox_console.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBox_console.Location = new System.Drawing.Point(3, 13);
             this.listBox_console.Name = "listBox_console";
-            this.listBox_console.Size = new System.Drawing.Size(153, 316);
+            this.listBox_console.Size = new System.Drawing.Size(148, 299);
             this.listBox_console.TabIndex = 6;
             // 
-            // textBox_commande
+            // drawPanel_plateau
             // 
-            this.textBox_commande.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox_commande.Location = new System.Drawing.Point(3, 308);
-            this.textBox_commande.Name = "textBox_commande";
-            this.textBox_commande.Size = new System.Drawing.Size(153, 20);
-            this.textBox_commande.TabIndex = 7;
-            this.textBox_commande.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_commande_KeyPress);
-            // 
-            // panel_control
-            // 
-            this.panel_control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_control.BackColor = System.Drawing.Color.Transparent;
-            this.panel_control.Controls.Add(this.button_out_of_jail);
-            this.panel_control.Controls.Add(this.textBox_commande);
-            this.panel_control.Controls.Add(this.button_trade);
-            this.panel_control.Controls.Add(this.button_end_turn);
-            this.panel_control.Controls.Add(this.button_mortage);
-            this.panel_control.Controls.Add(this.button_roll_dice);
-            this.panel_control.Controls.Add(this.listBox_console);
-            this.panel_control.Location = new System.Drawing.Point(613, 12);
-            this.panel_control.Name = "panel_control";
-            this.panel_control.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.panel_control.Size = new System.Drawing.Size(159, 418);
-            this.panel_control.TabIndex = 8;
+            this.drawPanel_plateau.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("drawPanel_plateau.BackgroundImage")));
+            this.drawPanel_plateau.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.drawPanel_plateau.Location = new System.Drawing.Point(165, 0);
+            this.drawPanel_plateau.Name = "drawPanel_plateau";
+            this.drawPanel_plateau.Size = new System.Drawing.Size(442, 443);
+            this.drawPanel_plateau.TabIndex = 0;
+            this.drawPanel_plateau.SizeChanged += new System.EventHandler(this.drawPanel_plateau_SizeChanged);
+            this.drawPanel_plateau.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPanel_plateau_Paint);
             // 
             // Form_board
             // 
@@ -170,6 +187,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(784, 442);
+            this.Controls.Add(this.drawPanel_player);
             this.Controls.Add(this.panel_control);
             this.Controls.Add(this.drawPanel_plateau);
             this.DoubleBuffered = true;
@@ -186,8 +204,6 @@
         }
 
         #endregion
-
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private DrawPanel drawPanel_plateau;
         private System.Windows.Forms.Button button_roll_dice;
         private System.Windows.Forms.Button button_mortage;
@@ -197,6 +213,7 @@
         private System.Windows.Forms.ListBox listBox_console;
         private System.Windows.Forms.TextBox textBox_commande;
         private DrawPanel panel_control;
+        private DrawPanel drawPanel_player;
     }
 }
 

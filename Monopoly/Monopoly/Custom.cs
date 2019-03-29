@@ -14,4 +14,13 @@ namespace Monopoly
             this.DoubleBuffered = true;
         }
     }
+
+    class DrawListBox : ListBox
+    {
+        public DrawListBox()
+        {
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.DoubleBuffered = true;
+        }
+    }
 }
