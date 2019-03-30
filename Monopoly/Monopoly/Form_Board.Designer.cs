@@ -151,7 +151,6 @@
             // 
             this.button_mortage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_mortage.BackColor = System.Drawing.SystemColors.Control;
-            this.button_mortage.Enabled = false;
             this.button_mortage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_mortage.Location = new System.Drawing.Point(3, 363);
             this.button_mortage.Name = "button_mortage";
