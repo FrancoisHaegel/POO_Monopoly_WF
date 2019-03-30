@@ -78,10 +78,12 @@
             this.comboBox_nb_joueur.Size = new System.Drawing.Size(97, 21);
             this.comboBox_nb_joueur.TabIndex = 1;
             this.comboBox_nb_joueur.SelectedValueChanged += new System.EventHandler(this.comboBox_nb_joueur_SelectedValueChanged);
+            this.comboBox_nb_joueur.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // button_jouer
             // 
             this.button_jouer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_jouer.Enabled = false;
             this.button_jouer.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_jouer.Location = new System.Drawing.Point(562, 325);
             this.button_jouer.Name = "button_jouer";
@@ -129,6 +131,7 @@
             this.textBox_joueur_1.Name = "textBox_joueur_1";
             this.textBox_joueur_1.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_1.TabIndex = 6;
+            this.textBox_joueur_1.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // textBox_joueur_2
             // 
@@ -137,6 +140,7 @@
             this.textBox_joueur_2.Name = "textBox_joueur_2";
             this.textBox_joueur_2.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_2.TabIndex = 8;
+            this.textBox_joueur_2.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label_joueur_2
             // 
@@ -155,6 +159,7 @@
             this.textBox_joueur_3.Name = "textBox_joueur_3";
             this.textBox_joueur_3.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_3.TabIndex = 10;
+            this.textBox_joueur_3.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label_joueur_3
             // 
@@ -174,6 +179,7 @@
             this.textBox_joueur_4.Name = "textBox_joueur_4";
             this.textBox_joueur_4.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_4.TabIndex = 12;
+            this.textBox_joueur_4.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label_joueur_4
             // 
@@ -193,6 +199,7 @@
             this.textBox_joueur_5.Name = "textBox_joueur_5";
             this.textBox_joueur_5.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_5.TabIndex = 14;
+            this.textBox_joueur_5.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label_joueur_5
             // 
@@ -212,6 +219,7 @@
             this.textBox_joueur_6.Name = "textBox_joueur_6";
             this.textBox_joueur_6.Size = new System.Drawing.Size(141, 20);
             this.textBox_joueur_6.TabIndex = 16;
+            this.textBox_joueur_6.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // label_joueur_6
             // 
@@ -232,6 +240,7 @@
             this.comboBox1.TabIndex = 17;
             this.comboBox1.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox1.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox1.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // comboBox2
             // 
@@ -242,6 +251,7 @@
             this.comboBox2.TabIndex = 18;
             this.comboBox2.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox2.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox2.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // comboBox3
             // 
@@ -253,6 +263,7 @@
             this.comboBox3.TabIndex = 19;
             this.comboBox3.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox3.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox3.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // comboBox4
             // 
@@ -264,6 +275,7 @@
             this.comboBox4.TabIndex = 20;
             this.comboBox4.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox4.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox4.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // comboBox5
             // 
@@ -275,6 +287,7 @@
             this.comboBox5.TabIndex = 21;
             this.comboBox5.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox5.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox5.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // comboBox6
             // 
@@ -286,6 +299,7 @@
             this.comboBox6.TabIndex = 22;
             this.comboBox6.DropDown += new System.EventHandler(this.openDropdown);
             this.comboBox6.DropDownClosed += new System.EventHandler(this.closeDropdown);
+            this.comboBox6.TextChanged += new System.EventHandler(this.ValueChanged);
             // 
             // Popup_game_param
             // 
@@ -319,6 +333,7 @@
             this.Name = "Popup_game_param";
             this.Text = "Popup_game_param";
             this.Load += new System.EventHandler(this.Popup_game_param_Load);
+            this.TextChanged += new System.EventHandler(this.ValueChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

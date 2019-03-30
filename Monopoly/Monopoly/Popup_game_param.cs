@@ -122,5 +122,38 @@ namespace Monopoly
                 }
             }
         }
+
+        private void ValueChanged(object sender, EventArgs e)
+        {
+            bool enabled = true;
+
+            if (string.IsNullOrWhiteSpace(textBox_joueur_1.Text))
+                enabled = false;
+
+            if (string.IsNullOrWhiteSpace(textBox_joueur_2.Text))
+                enabled = false;
+
+            if (comboBox1.SelectedIndex < 0)
+                enabled = false;
+
+            if (comboBox2.SelectedIndex < 0)
+                enabled = false;
+
+            for (int i = 0; i <= disabled.Count; i++)
+            {
+                if (i < (comboBox_nb_joueur.SelectedIndex) * 3)
+                {
+                    if (i % 3 == 1)
+                        if (string.IsNullOrWhiteSpace(((TextBox)disabled[i]).Text))
+                            enabled = false;
+                    if (i % 3 == 2)
+                        if (((ComboBox)disabled[i]).SelectedIndex < 0)
+                            enabled = false;
+
+                }
+            }
+
+            button_jouer.Enabled = enabled;
+        }
     }
 }
