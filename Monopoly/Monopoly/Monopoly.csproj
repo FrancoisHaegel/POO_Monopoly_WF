@@ -55,6 +55,12 @@
     <Compile Include="Form_Board.Designer.cs">
       <DependentUpon>Form_Board.cs</DependentUpon>
     </Compile>
+    <Compile Include="Popup_carte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Popup_carte.Designer.cs">
+      <DependentUpon>Popup_carte.cs</DependentUpon>
+    </Compile>
     <Compile Include="Popup_dices.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_Board.resx">
       <DependentUpon>Form_Board.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Popup_carte.resx">
+      <DependentUpon>Popup_carte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Popup_dices.resx">
       <DependentUpon>Popup_dices.cs</DependentUpon>
@@ -119,6 +128,17 @@
     <None Include="Resources\dice_6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\electric.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\train.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\water.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

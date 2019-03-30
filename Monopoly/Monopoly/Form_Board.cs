@@ -21,8 +21,8 @@ namespace Monopoly
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
-            Popup_game_param.GetInstance.ShowDialog(this);
-            Popup_game_param.GetInstance.Dispose();
+            //Popup_game_param.GetInstance.ShowDialog(this);
+            //Popup_game_param.GetInstance.Dispose();
         }
 
         public static Form_board GetInstance
@@ -446,6 +446,45 @@ namespace Monopoly
             }
         }
 
+
+        // Affiche le popup de la carte
+        private void popupCarte(String nom)
+        {
+            Popup_carte popup = new Popup_carte("ENTREPRISE", nom, true, new Bitmap(".\\Resources\\water.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("ENTREPRISE", nom, false, new Bitmap(".\\Resources\\water.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("ENTREPRISE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("GARE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("PROPRIETE", nom,false, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100);
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("ENTREPRISE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("GARE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("PROPRIETE", nom,true, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100);
+            popup.ShowDialog(this);
+            popup.Dispose();
+        }
+
+
+        // Click sur une propriete dans le panel joueur
         private void drawPanel_player_MouseClick(object sender, MouseEventArgs e)
         {
             if (mouseIsOnProperty(e))
@@ -467,7 +506,7 @@ namespace Monopoly
                     {
                         i++;
                         if (i == index)
-                            insert_console(c.Item1);
+                            popupCarte(c.Item1);
                     }
                 }
             }
