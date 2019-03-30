@@ -32,7 +32,6 @@ namespace Monopoly.controller
 
         private static Random random = new Random();
         private bool dicesRolled = false;
-        private bool endTurn = false;
         private int currentPlayerRerollsCount = 0;
 
         public static GameManager GetInstance
@@ -95,15 +94,6 @@ namespace Monopoly.controller
             Form_board.GetInstance.insert_console("Solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney());
             Form_board.GetInstance.insert_console("Faire un choix d'action");
 
-            while (!endTurn)
-            {
-                printChoices();
-            }
-
-            // Debug //
-            //playerManager.getCurrentPlayer().describe();
-
-            endTurn = false;
             dicesRolled = false;
             currentPlayerRerollsCount = 0;
             playerManager.setCurrentPlayer(playerManager.getPlayers()[(playerManager.getCurrentPlayer().getId() + 1) % playerManager.getPlayers().Count()]);
@@ -269,13 +259,20 @@ namespace Monopoly.controller
                 {
                     Form_board.GetInstance.insert_console("Vous avez fait 3 double à la suite, vous allez en prison et votre tour est terminé !");
                     sendToJail();
-                    endTurn = true;
                 }
             }
             else
             {
                 Form_board.GetInstance.insert_console("Vous avez déjà lancé les dés ce tour");
             }
+        }
+
+        public void clickEndTurn()
+        {
+            if (dicesRolled)
+                NextTurn();
+            else
+                Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
         }
 
         public void printChoices()
@@ -348,14 +345,6 @@ namespace Monopoly.controller
                         Form_board.GetInstance.insert_console("Vous n'avez pas de propriétés");
                     }
                     break;
-
-                case 9:
-                    if (dicesRolled)
-                        endTurn = true;
-                    else
-                        Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
-                    break;
-
                 default:
                     Form_board.GetInstance.insert_console("Invalid Input");
                     getInput();

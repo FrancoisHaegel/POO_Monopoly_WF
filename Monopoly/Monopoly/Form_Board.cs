@@ -320,7 +320,7 @@ namespace Monopoly
 
         private void button_end_turn_Click(object sender, EventArgs e)
         {
-            test();
+            GameManager.GetInstance.clickEndTurn();
         }
 
         private void button_roll_dice_Click(object sender, EventArgs e)
