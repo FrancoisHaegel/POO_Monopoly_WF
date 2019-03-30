@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_board));
+            this.button_menu = new System.Windows.Forms.Button();
             this.drawPanel_player = new Monopoly.DrawPanel();
             this.panel_control = new Monopoly.DrawPanel();
             this.button_out_of_jail = new System.Windows.Forms.Button();
@@ -41,6 +42,22 @@
             this.drawPanel_plateau = new Monopoly.DrawPanel();
             this.panel_control.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // button_menu
+            // 
+            this.button_menu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_menu.BackColor = System.Drawing.Color.Transparent;
+            this.button_menu.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_menu.BackgroundImage")));
+            this.button_menu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_menu.FlatAppearance.BorderSize = 0;
+            this.button_menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_menu.Location = new System.Drawing.Point(766, 0);
+            this.button_menu.Margin = new System.Windows.Forms.Padding(0);
+            this.button_menu.Name = "button_menu";
+            this.button_menu.Size = new System.Drawing.Size(18, 16);
+            this.button_menu.TabIndex = 10;
+            this.button_menu.UseVisualStyleBackColor = false;
+            this.button_menu.Click += new System.EventHandler(this.button_menu_Click);
             // 
             // drawPanel_player
             // 
@@ -187,6 +204,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(784, 442);
+            this.Controls.Add(this.button_menu);
             this.Controls.Add(this.drawPanel_player);
             this.Controls.Add(this.panel_control);
             this.Controls.Add(this.drawPanel_plateau);
@@ -214,6 +232,7 @@
         private System.Windows.Forms.TextBox textBox_commande;
         private DrawPanel panel_control;
         private DrawPanel drawPanel_player;
+        private System.Windows.Forms.Button button_menu;
     }
 }
 

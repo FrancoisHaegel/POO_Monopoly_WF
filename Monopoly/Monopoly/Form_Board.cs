@@ -21,6 +21,8 @@ namespace Monopoly
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
+            Popup_game_param.GetInstance.ShowDialog(this);
+            Popup_game_param.GetInstance.Dispose();
         }
 
         public static Form_board GetInstance
@@ -360,8 +362,8 @@ namespace Monopoly
             {
                 g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(posX, posY, drawPanel_player.Width, PLAYER_HEIGHT));
                 g.FillRectangle(new SolidBrush(joueurs[entry.Key].Item1), new Rectangle(posX + 2, posY + 2, drawPanel_player.Width - 4, 16));
-                g.DrawString(entry.Key, DefaultFont, new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
-                g.DrawString(CURRENCY + joueurs[entry.Key].Item2.ToString(), DefaultFont, new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 50, posY + 3));
+                g.DrawString(entry.Key, new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
+                g.DrawString(CURRENCY + joueurs[entry.Key].Item2.ToString(), new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 53, posY + 3));
                 foreach (Tuple < String, Color, int, int> c in entry.Value)
                 {
                     if (space)
@@ -469,6 +471,11 @@ namespace Monopoly
                     }
                 }
             }
+        }
+
+        private void button_menu_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
