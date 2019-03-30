@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using Monopoly.controller;
 
 namespace Monopoly
 {
@@ -93,6 +94,12 @@ namespace Monopoly
         public void showDices(int dice_A, int dice_B)
         {
             Popup_dices dices = new Popup_dices(dice_images[dice_A-1], dice_images[dice_B-1]);
+            dices.Show();
+        }
+
+        public void showDices(int dice)
+        {
+            Popup_dices dices = new Popup_dices(dice_images[dice - 1]);
             dices.Show();
         }
 
@@ -318,8 +325,7 @@ namespace Monopoly
 
         private void button_roll_dice_Click(object sender, EventArgs e)
         {
-            removePropriete("Francois", "Elsau");
-            showDices(2, 3);
+            GameManager.GetInstance.clickRollDices();
         }
 
         // KeyPress event de la textBox des commandes 
