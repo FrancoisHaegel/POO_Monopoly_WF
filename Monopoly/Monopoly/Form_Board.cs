@@ -69,12 +69,19 @@ namespace Monopoly
         // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
         Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>();
 
-        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>();
-
+        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
+        {
+            {"Francois", Tuple.Create(Color.DarkOrange, 100000)},
+            {"Bruno", Tuple.Create(Color.MediumTurquoise, 200)},
+        };
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
-        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>();
+        Dictionary<String, List<Tuple<String, Color, int, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int, int>>>()
+        {
+            {"Francois", new List<Tuple<String, Color, int, int, int>>{  } },
+            {"Bruno", new List<Tuple<String, Color, int, int, int>>{ Tuple.Create("Hautepierre", Color.Red, 0, 60, 5), Tuple.Create("Neuhof", Color.Red, 1, 48, 1) } },
 
+        };
         // Affiche les images des des correspondants au entier donne
         public void showDices(int dice_A, int dice_B)
         {
@@ -101,11 +108,9 @@ namespace Monopoly
         public void addJoueur(String nom, Color color)
         {
             joueurs.Add(nom, Tuple.Create(color, 0));
-            proprietes.Add(nom, new List<Tuple<String, Color, int, int>> { });
+            proprietes.Add(nom, new List<Tuple<String, Color, int, int, int>> { });
             drawPanel_player.Refresh();
         }
-
-
 
         public void removeJoueur(String nom)
         {
@@ -113,22 +118,15 @@ namespace Monopoly
             drawPanel_player.Refresh();
         }
 
-        public void addPropriete(String joueur, String nomPropriete, Color couleur)
-        {
-            proprietes[joueur].Add(Tuple.Create(nomPropriete, couleur, 0, 0));
-            index_proprietes[nomPropriete] = 0;
-            drawPanel_player.Refresh();
-        }
-
         public void addPropriete(String joueur, String nomPropriete, Color couleur, int index)
         {
             int i = 0;
-            foreach (Tuple<String, Color, int, int> p in proprietes[joueur])
+            foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, 0));
+            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, 0, index));
             index_proprietes[nomPropriete] = index;
             drawPanel_player.Refresh();
         }
@@ -136,12 +134,12 @@ namespace Monopoly
         public void addPropriete(String joueur, String nomPropriete, Color couleur, int index, int loyer)
         {
             int i = 0;
-            foreach (Tuple<String, Color, int, int> p in proprietes[joueur])
+            foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, loyer));
+            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, loyer, index));
             index_proprietes[nomPropriete] = index;
             drawPanel_player.Refresh();
         }
@@ -346,13 +344,13 @@ namespace Monopoly
             int posX = drawPanel_player.Location.X - 13;
             int posY = drawPanel_player.Location.Y - 13;
             bool space = true;
-            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
+            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int, int>>> entry in proprietes)
             {
                 g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(posX, posY, drawPanel_player.Width, PLAYER_HEIGHT));
                 g.FillRectangle(new SolidBrush(joueurs[entry.Key].Item1), new Rectangle(posX + 2, posY + 2, drawPanel_player.Width - 4, 16));
                 g.DrawString(entry.Key, new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
                 g.DrawString(CURRENCY + joueurs[entry.Key].Item2.ToString(), new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 53, posY + 3));
-                foreach (Tuple < String, Color, int, int> c in entry.Value)
+                foreach (Tuple < String, Color, int, int, int> c in entry.Value)
                 {
                     if (space)
                         posY += 0;
@@ -408,7 +406,7 @@ namespace Monopoly
         {
             bool isOn = false;
             int posY = 0;
-            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
+            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int, int>>> entry in proprietes)
             {
                 posY += PLAYER_HEIGHT;
                 if (e.Location.Y > posY && e.Location.Y < posY + PLAYER_HEIGHT * (entry.Value.Count))
@@ -436,13 +434,40 @@ namespace Monopoly
 
 
         // Affiche le popup de la carte
-        private void popupCarte(String nom)
+        private void popupCarte(int index)
         {
+            model.Property ppt = GameManager.GetInstance.boardManager.getBoard()[index].getProperty();
+
+            bool owned = (ppt.getOwner() == GameManager.GetInstance.playerManager.getCurrentPlayer());
+
+            Popup_carte popup = null;
+            switch (ppt.getType())
+            {
+                case model.Property.PropType.PRIVATE:
+                    popup = new Popup_carte("PROPRIETE", ppt.getName(), owned,Color.FromName( ((model.PrivateProperty)ppt).getColor() ), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice()/2);
+                    popup.ShowDialog(this);
+                    popup.Dispose();
+                    break;
+                case model.Property.PropType.RAILROAD:
+                    popup = new Popup_carte("GARE", ppt.getName(), owned, Color.FromName(((model.PrivateProperty)ppt).getColor()), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], new Bitmap(".\\Resources\\train.png"));
+                    popup.ShowDialog(this);
+                    popup.Dispose();
+                    break;
+                case model.Property.PropType.UTILITY:
+                    popup.ShowDialog(this);
+                    popup.Dispose();
+                    break;
+            }
+
+
+            /*
             Popup_carte popup = new Popup_carte("ENTREPRISE", nom, true, new Bitmap(".\\Resources\\water.png"));
             Popup_enchere enchere = new Popup_enchere(new List<String> { "Nathan", "Francis", "Bruno" }, popup);
             enchere.ShowDialog(this);
             popup.Dispose();
             enchere.Dispose();
+            */
+
             /*
             popup = new Popup_carte("ENTREPRISE", nom, false, new Bitmap(".\\Resources\\water.png"));
             popup.ShowDialog(this);
@@ -482,7 +507,7 @@ namespace Monopoly
             {
                 int posY = 0;
                 int temp = 0;
-                foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
+                foreach (KeyValuePair<String, List<Tuple<String, Color, int, int, int>>> entry in proprietes)
                 {
                     posY += (entry.Value.Count) * PLAYER_HEIGHT + 25;
                     if (posY < e.Location.Y)
@@ -491,13 +516,13 @@ namespace Monopoly
                 int index = (e.Location.Y - temp) / 20;
                 int i = 0;
 
-                foreach (KeyValuePair<String, List<Tuple<String, Color, int ,int>>> entry in proprietes)
+                foreach (KeyValuePair<String, List<Tuple<String, Color, int ,int, int>>> entry in proprietes)
                 {
-                    foreach (Tuple<String, Color, int, int> c in entry.Value)
+                    foreach (Tuple<String, Color, int, int, int> c in entry.Value)
                     {
                         i++;
                         if (i == index)
-                            popupCarte(c.Item1);
+                            popupCarte(c.Item5);
                     }
                 }
             }
