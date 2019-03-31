@@ -11,6 +11,7 @@ namespace Monopoly
     public partial class Form_board : Form 
     {
         private static int PLAYER_HEIGHT = 20;
+        private static string CURRENCY = "$";
         private static Form_board instance;
         public Form_board()
         {
@@ -21,6 +22,8 @@ namespace Monopoly
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
+            //Popup_game_param.GetInstance.ShowDialog(this);
+            //Popup_game_param.GetInstance.Dispose();
         }
 
         public static Form_board GetInstance
@@ -51,26 +54,26 @@ namespace Monopoly
             {Color.LightPink, new int[] { 0, 0, 20 } },
         };
 
-        Dictionary<String, Color> joueurs = new Dictionary<String, Color>()
+        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
         {
-            {"Francois", Color.DarkOrange},
-            {"Bruno", Color.MediumTurquoise},
-            {"Nathan", Color.MediumSeaGreen},
-            {"Ching", Color.Gold},
-            {"Chang", Color.RoyalBlue},
-            {"Chong", Color.LightPink},
+            {"Francois", Tuple.Create(Color.DarkOrange, 100000)},
+            {"Bruno", Tuple.Create(Color.MediumTurquoise, 200)},
+            {"Nathan", Tuple.Create(Color.MediumSeaGreen, 0)},
+            {"Ching", Tuple.Create(Color.Gold, 0)},
+            {"Chang", Tuple.Create(Color.RoyalBlue, 0)},
+            {"Chong", Tuple.Create(Color.LightPink, 0)},
         };
 
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
-        Dictionary<String, List<Tuple<String, Color>>> proprietes = new Dictionary<String, List<Tuple<String, Color>>>()
+        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>()
         {
-            {"Francois", new List<Tuple<String, Color>>{  } },
-            {"Bruno", new List<Tuple<String, Color>>{ Tuple.Create("Hautepierre", Color.Red), Tuple.Create("Neuhof", Color.Red) } },
-            {"Nathan", new List<Tuple<String, Color>>{ Tuple.Create("Gare", Color.Blue), Tuple.Create("Meinau", Color.Blue) } },
-            {"Ching", new List<Tuple<String, Color>>{} },
-            {"Chang", new List<Tuple<String, Color>>{} },
-            {"Chong", new List<Tuple<String, Color>>{}},
+            {"Francois", new List<Tuple<String, Color, int, int>>{  } },
+            {"Bruno", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Hautepierre", Color.Red, 0, 60), Tuple.Create("Neuhof", Color.Red, 1, 48) } },
+            {"Nathan", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Gare", Color.Blue, 4, 56), Tuple.Create("Meinau", Color.Blue, 5 , 24) } },
+            {"Ching", new List<Tuple<String, Color, int, int>>{} },
+            {"Chang", new List<Tuple<String, Color, int, int>>{} },
+            {"Chong", new List<Tuple<String, Color, int, int>>{}},
         };
 
 
@@ -115,10 +118,12 @@ namespace Monopoly
 
         public void addJoueur(String nom, Color color)
         {
-            joueurs.Add(nom, color);
-            proprietes.Add(nom, new List<Tuple<String, Color>> { });
+            joueurs.Add(nom, Tuple.Create(color, 0));
+            proprietes.Add(nom, new List<Tuple<String, Color, int, int>> { });
             drawPanel_player.Refresh();
         }
+
+
 
         public void removeJoueur(String nom)
         {
@@ -128,7 +133,7 @@ namespace Monopoly
 
         public void addPropriete(String joueur, String nomPropriete, Color couleur)
         {
-            proprietes[joueur].Add(Tuple.Create(nomPropriete, couleur));
+            proprietes[joueur].Add(Tuple.Create(nomPropriete, couleur, 0, 0));
             index_proprietes[nomPropriete] = 0;
             drawPanel_player.Refresh();
         }
@@ -136,15 +141,29 @@ namespace Monopoly
         public void addPropriete(String joueur, String nomPropriete, Color couleur, int index)
         {
             int i = 0;
-            foreach (Tuple<String, Color> p in proprietes[joueur])
+            foreach (Tuple<String, Color, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur));
+            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, 0));
             index_proprietes[nomPropriete] = index;
             drawPanel_player.Refresh();
         }
+
+        public void addPropriete(String joueur, String nomPropriete, Color couleur, int index, int loyer)
+        {
+            int i = 0;
+            foreach (Tuple<String, Color, int, int> p in proprietes[joueur])
+            {
+                if (index_proprietes[p.Item1] < index)
+                    i++;
+            }
+            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, loyer));
+            index_proprietes[nomPropriete] = index;
+            drawPanel_player.Refresh();
+        }
+
 
         public void removePropriete(String joueur, String nomPropriete)
         {
@@ -345,18 +364,27 @@ namespace Monopoly
             int posX = drawPanel_player.Location.X - 13;
             int posY = drawPanel_player.Location.Y - 13;
             bool space = true;
-            foreach (KeyValuePair<String, List<Tuple<String, Color>>> entry in proprietes)
+            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
             {
                 g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(posX, posY, drawPanel_player.Width, PLAYER_HEIGHT));
-                g.FillRectangle(new SolidBrush(joueurs[entry.Key]), new Rectangle(posX + 2, posY + 2, drawPanel_player.Width - 4, 16));
-                g.DrawString(entry.Key, DefaultFont, new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
-                foreach (Tuple < String, Color > c in entry.Value)
+                g.FillRectangle(new SolidBrush(joueurs[entry.Key].Item1), new Rectangle(posX + 2, posY + 2, drawPanel_player.Width - 4, 16));
+                g.DrawString(entry.Key, new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
+                g.DrawString(CURRENCY + joueurs[entry.Key].Item2.ToString(), new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 53, posY + 3));
+                foreach (Tuple < String, Color, int, int> c in entry.Value)
                 {
                     if (space)
                         posY += 0;
                     space = false;
                     g.FillRectangle(new SolidBrush(c.Item2), new Rectangle(posX + 2, posY += PLAYER_HEIGHT, drawPanel_player.Width - 4, PLAYER_HEIGHT));
                     g.DrawString(c.Item1, DefaultFont, new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
+                    g.DrawString("-" + CURRENCY + c.Item4.ToString(), DefaultFont, new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 50, posY + 3));
+                    // s'il y a au moins une maison sur la propriété on dessine le nombre de maisons
+                    if (c.Item3 > 0)
+                    {
+                        g.DrawString(c.Item3.ToString(), DefaultFont, new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 100, posY + 3));
+                        g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(posX + drawPanel_player.Width - 86, posY + 10, 10, PLAYER_HEIGHT / 2 - 5 ));
+                        g.FillPolygon(new SolidBrush(Color.Black), new PointF[] { new PointF(posX + drawPanel_player.Width - 89, posY + 10), new PointF(posX + drawPanel_player.Width - 81, posY + 2), new PointF(posX + drawPanel_player.Width - 73, posY + 10) });
+                    }
                 }
                 space = true;
                 posY += 25;
@@ -398,7 +426,7 @@ namespace Monopoly
         {
             bool isOn = false;
             int posY = 0;
-            foreach (KeyValuePair<String, List<Tuple<String, Color>>> entry in proprietes)
+            foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
             {
                 posY += PLAYER_HEIGHT;
                 if (e.Location.Y > posY && e.Location.Y < posY + PLAYER_HEIGHT * (entry.Value.Count))
@@ -424,13 +452,55 @@ namespace Monopoly
             }
         }
 
+
+        // Affiche le popup de la carte
+        private void popupCarte(String nom)
+        {
+            Popup_carte popup = new Popup_carte("ENTREPRISE", nom, true, new Bitmap(".\\Resources\\water.png"));
+            Popup_enchere enchere = new Popup_enchere(new List<String> { "Nathan", "Francis", "Bruno" }, popup);
+            enchere.ShowDialog(this);
+            popup.Dispose();
+            enchere.Dispose();
+            /*
+            popup = new Popup_carte("ENTREPRISE", nom, false, new Bitmap(".\\Resources\\water.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("ENTREPRISE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("GARE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("PROPRIETE", nom,false, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("ENTREPRISE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("GARE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
+            popup.ShowDialog(this);
+            popup.Dispose();
+
+            popup = new Popup_carte("PROPRIETE", nom,true, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
+            popup.ShowDialog(this);
+            popup.Dispose();
+            */
+        }
+
+
+        // Click sur une propriete dans le panel joueur
         private void drawPanel_player_MouseClick(object sender, MouseEventArgs e)
         {
             if (mouseIsOnProperty(e))
             {
                 int posY = 0;
                 int temp = 0;
-                foreach (KeyValuePair<String, List<Tuple<String, Color>>> entry in proprietes)
+                foreach (KeyValuePair<String, List<Tuple<String, Color, int, int>>> entry in proprietes)
                 {
                     posY += (entry.Value.Count) * PLAYER_HEIGHT + 25;
                     if (posY < e.Location.Y)
@@ -439,16 +509,21 @@ namespace Monopoly
                 int index = (e.Location.Y - temp) / 20;
                 int i = 0;
 
-                foreach (KeyValuePair<String, List<Tuple<String, Color>>> entry in proprietes)
+                foreach (KeyValuePair<String, List<Tuple<String, Color, int ,int>>> entry in proprietes)
                 {
-                    foreach (Tuple<String, Color> c in entry.Value)
+                    foreach (Tuple<String, Color, int, int> c in entry.Value)
                     {
                         i++;
                         if (i == index)
-                            insert_console(c.Item1);
+                            popupCarte(c.Item1);
                     }
                 }
             }
+        }
+
+        private void button_menu_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
