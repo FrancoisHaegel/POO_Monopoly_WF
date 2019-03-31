@@ -53,15 +53,6 @@ namespace Monopoly.controller
             boardManager.init(propertyManager.getPrivateProperties(), propertyManager.getRailRoads(), propertyManager.getUtilityCompanies());
             playerManager.init(players, boardManager.getStart());
             cardManager.init(pathToCommunity, pathToChance);
-
-            //Test du chargement des CSV    
-
-            //propertyManager.describe();
-            //playerManager.describe();
-            //cardManager.describe();
-            //boardManager.describe();
-
-            //startGame();
         }
 
         public bool isOver()
@@ -183,7 +174,6 @@ namespace Monopoly.controller
 
         public void freePlayerRollDice(int[] dices, bool jailedOut)
         {
-            Form_board.GetInstance.insert_console("joueur libre");
             if (dices[0] != dices[1] || (dices[0] == dices[1] && currentPlayerRerollsCount < 2))
             {
                 if (dices[0] != dices[1] || jailedOut)
@@ -197,9 +187,6 @@ namespace Monopoly.controller
                 }
 
                 playerManager.moovePlayer(playerManager.getCurrentPlayer(), dices[0] + dices[1]);
-
-                Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " est atterit sur la case : ");
-
                 
                 if (playerManager.getCurrentPlayer().getLocation().getProperty() != null)
                 {
@@ -230,7 +217,6 @@ namespace Monopoly.controller
                     else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.CHANCE)
                     {
                         Card card = cardManager.drawCard(Card.CardType.CHANCE);
-                        card.describe();
                         if (card.getId() == 7)
                         {
                             Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
@@ -244,7 +230,6 @@ namespace Monopoly.controller
                     else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.COMMUNITY_CHEST)
                     {
                         Card card = cardManager.drawCard(Card.CardType.COMMUNITY);
-                        card.describe();
                         if (card.getId() == 8)
                         {
                             Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
@@ -295,7 +280,7 @@ namespace Monopoly.controller
                 }
                 else
                 {
-                    Form_board.GetInstance.insert_console("C'est votre " + playerManager.getCurrentPlayer().getTurnInJail().ToString() + "e tour en prison, vous pouvez sortir en payant 50$ ou en utilisant la carte magique");
+                    Form_board.GetInstance.insert_console("C'est votre " + playerManager.getCurrentPlayer().getTurnInJail().ToString() + "e tour en prison");
                 }
             }
 
@@ -315,7 +300,7 @@ namespace Monopoly.controller
             {
                 if (property.getMortgaged() == true)
                 {
-                    Form_board.GetInstance.insert_console("Cette propriété est hypothéquée, vous ne payez pas de loyer, mais elle ne peut pas etre achetée");
+                    Form_board.GetInstance.insert_console("Cette propriété est hypothéquée, vous ne payez pas de loyer");
                 }
                 else if(property.getType() == Property.PropType.UTILITY)
                 {
@@ -358,7 +343,6 @@ namespace Monopoly.controller
                 else
                 {
                     Form_board.GetInstance.popupEnchere(property.Tile.getIndex());
-                    //startBid(property);
                 }
             }
         }
@@ -408,7 +392,7 @@ namespace Monopoly.controller
                         {
                             if (hotelsCount < MAX_HOTELS)
                             {
-                                Form_board.GetInstance.insert_console("Vous avez déjà 4 amisons, un hotel est donc construit à la place pour " + property.getHouseCost().ToString() + "$");
+                                Form_board.GetInstance.insert_console("Vous avez déjà 4 amisons, un hotel est construit à la place pour " + property.getHouseCost().ToString() + "$");
                                 try
                                 {
                                     playerManager.takeMoney(player, property.getHouseCost());
@@ -422,7 +406,7 @@ namespace Monopoly.controller
                             }
                             else
                             {
-                                Form_board.GetInstance.insert_console("Le nombre d'hotels maximum est déjà atteint, si des hotels sont vendus, d'autres pourront êtres construient");
+                                Form_board.GetInstance.insert_console("Le nombre d'hotels maximum est déjà atteint");
                             }
                         }
                     }
@@ -434,12 +418,12 @@ namespace Monopoly.controller
                 }
                 else
                 {
-                    Form_board.GetInstance.insert_console("Vous n'avez pas toutes propriétés de cette rue, vous ne pouvez pas construire de maisons");
+                    Form_board.GetInstance.insert_console("Vous n'avez pas toutes propriétés de cette rue");
                 }
             }
             else
             {
-                Form_board.GetInstance.insert_console("Le nombre de maisons maximum est déjà atteint, si des maisons sont vendus, d'autres pourront êtres construitent");
+                Form_board.GetInstance.insert_console("Le nombre de maisons maximum est déjà atteint");
             }
 
         }
@@ -450,7 +434,7 @@ namespace Monopoly.controller
             {
                 if (property.getHousesCount() == 5)
                 {
-                    Form_board.GetInstance.insert_console("Vous vendez l'hotel sur cette propriété pour " + (property.getHouseCost() * 4 / 2).ToString() + "$, il ne reste plus rien !");
+                    Form_board.GetInstance.insert_console("Vous vendez l'hotel sur cette propriété pour " + (property.getHouseCost() * 4 / 2).ToString() + "$");
                     playerManager.giveMoney(player, property.getHouseCost() * 6 / 2);
                     property.resetCurrentRent();
                 }
@@ -470,7 +454,7 @@ namespace Monopoly.controller
         //Make the player pay his rent when he lands on a tile which has property already owned
         public void payPrivateRent(Player player, Property property)
         {
-            Form_board.GetInstance.insert_console("La propriété sur cette case est détenue par " + property.getOwner().getName() + ", vous devez lui donner " + property.getCurrentRent().ToString() + "$");
+            Form_board.GetInstance.insert_console(property.getOwner().getName() + " detient cette propriété,  vous devez lui donner " + property.getCurrentRent().ToString() + "$");
             try
             {
                 playerManager.takeMoney(player, property.getCurrentRent());
@@ -496,7 +480,7 @@ namespace Monopoly.controller
 
         public void payUtilityRent(Player player, Property property)
         {
-            Form_board.GetInstance.insert_console("Vous êtes attérit sur une compagnie publique, vous devez lancer un dé, puis payer " + property.getCurrentRent().ToString() + " fois le résultat sur le dé");
+            Form_board.GetInstance.insert_console("Cette compagnie est publique, lancez un dé, puis payer " + property.getCurrentRent().ToString() + " fois le résultat");
             int dice = rollDices()[0];
             Form_board.GetInstance.showDices(dice);
             Form_board.GetInstance.insert_console("Vous avez fait un " + dice.ToString());
@@ -619,9 +603,6 @@ namespace Monopoly.controller
             Dictionary<Player, int> bids = new Dictionary<Player, int>();
             foreach (Player p in playerManager.getPlayers())
             {
-                Form_board.GetInstance.insert_console(p.getName() + " entre une proposition pour ");
-                property.describe();
-
                 int x = 0;
                 bool invalidInput = true;
                 while (invalidInput)
@@ -671,16 +652,17 @@ namespace Monopoly.controller
 
         public void mooveToNext(Player player, Property.PropType propType)
         {
-            foreach(Tile t in boardManager.getBoard())
+            foreach (Tile t in boardManager.getBoard())
             {
-                if(t.getIndex() > player.getLocation().getIndex())
+                if (t.getIndex() > player.getLocation().getIndex())
                 {
-                    if(t.getProperty() != null)
+                    if (t.getProperty() != null)
                     {
-                        if(t.getProperty().getType() == propType)
+                        if (t.getProperty().getType() == propType)
                         {
                             playerManager.moovePlayer(player, t);
                             landOnProperty(player, t.getProperty());
+                            break;
                         }
                     }
                 }
