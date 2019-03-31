@@ -69,10 +69,17 @@ namespace Monopoly
         // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
         Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>();
 
+        Dictionary<String, int> thune = new Dictionary<String, int>()
+        {
+        };
+
         Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
         {
         };
+
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
+
+        Dictionary<model.Property, int> rent_proprietes = new Dictionary<model.Property, int>();
 
         Dictionary<String, List<Tuple<String, Color, int, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int, int>>>()
         {
@@ -90,6 +97,18 @@ namespace Monopoly
             dices.Show();
         }
 
+        public void setRent(model.Property nomPropritete, int rent)
+        {
+            rent_proprietes[nomPropritete] = rent;
+            drawPanel_player.Refresh();
+        }
+
+        public void setThunes(string nomJoueur, int thunes)
+        {
+            thune[nomJoueur] = thunes;
+            drawPanel_player.Refresh();
+        }
+
         public int getJetonPositionX(Color color)
         {
             return jetons[color][0];
@@ -103,6 +122,7 @@ namespace Monopoly
         public void addJoueur(String nom, Color color)
         {
             joueurs.Add(nom, Tuple.Create(color, 0));
+            thune.Add(nom, 1500);
             proprietes.Add(nom, new List<Tuple<String, Color, int, int, int>> { });
             drawPanel_player.Refresh();
         }
@@ -113,29 +133,39 @@ namespace Monopoly
             drawPanel_player.Refresh();
         }
 
-        public void addPropriete(String joueur, String nomPropriete, Color couleur, int index)
+        public void addPropriete(String joueur, model.Property nomPropriete, Color couleur, int index)
         {
             int i = 0;
+            bool add = true;
             foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
+                if (p.Item1 == nomPropriete.getName())
+                    add = false;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, 0, index));
-            index_proprietes[nomPropriete] = index;
+            if (add)
+                proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, 0, index));
+            index_proprietes[nomPropriete.getName()] = index;
+            rent_proprietes[nomPropriete] = 100;
             drawPanel_player.Refresh();
         }
 
-        public void addPropriete(String joueur, String nomPropriete, Color couleur, int index, int loyer)
+        public void addPropriete(String joueur, model.Property nomPropriete, Color couleur, int index, int loyer)
         {
             int i = 0;
+            bool add = true;
             foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
+                if (p.Item1 == nomPropriete.getName())
+                    add = false;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete, couleur, 0, loyer, index));
-            index_proprietes[nomPropriete] = index;
+            if (add)
+                proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, loyer, index));
+            index_proprietes[nomPropriete.getName()] = index;
+            rent_proprietes[nomPropriete] = loyer;
             drawPanel_player.Refresh();
         }
 
@@ -344,7 +374,7 @@ namespace Monopoly
                 g.FillRectangle(new SolidBrush(Color.Black), new Rectangle(posX, posY, drawPanel_player.Width, PLAYER_HEIGHT));
                 g.FillRectangle(new SolidBrush(joueurs[entry.Key].Item1), new Rectangle(posX + 2, posY + 2, drawPanel_player.Width - 4, 16));
                 g.DrawString(entry.Key, new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
-                g.DrawString(CURRENCY + joueurs[entry.Key].Item2.ToString(), new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 53, posY + 3));
+                g.DrawString(CURRENCY + thune[entry.Key].ToString(), new Font(DefaultFont, FontStyle.Bold), new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 53, posY + 3));
                 foreach (Tuple < String, Color, int, int, int> c in entry.Value)
                 {
                     if (space)
@@ -352,7 +382,7 @@ namespace Monopoly
                     space = false;
                     g.FillRectangle(new SolidBrush(c.Item2), new Rectangle(posX + 2, posY += PLAYER_HEIGHT, drawPanel_player.Width - 4, PLAYER_HEIGHT));
                     g.DrawString(c.Item1, DefaultFont, new SolidBrush(Color.Black), new PointF(posX + 2, posY + 3));
-                    g.DrawString("-" + CURRENCY + c.Item4.ToString(), DefaultFont, new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 50, posY + 3));
+                    g.DrawString("-" + CURRENCY + controller.GameManager.GetInstance.boardManager.getBoard()[c.Item5].getProperty().getCurrentRent(), DefaultFont, new SolidBrush(Color.Black), new PointF(posX + drawPanel_player.Width - 50, posY + 3));
                     // s'il y a au moins une maison sur la propriété on dessine le nombre de maisons
                     if (c.Item3 > 0)
                     {
@@ -439,12 +469,12 @@ namespace Monopoly
             switch (ppt.getType())
             {
                 case model.Property.PropType.PRIVATE:
-                    popup = new Popup_carte("PROPRIETE", ppt.getName(), owned,Color.FromName( ((model.PrivateProperty)ppt).getColor() ), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice()/2, purchase);
+                    popup = new Popup_carte(ppt, "PROPRIETE", ppt.getName(), owned,Color.FromName( ((model.PrivateProperty)ppt).getColor() ), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice()/2, purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
                 case model.Property.PropType.RAILROAD:
-                    popup = new Popup_carte("GARE", ppt.getName(), owned, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), purchase);
+                    popup = new Popup_carte(ppt, "GARE", ppt.getName(), owned, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
@@ -458,7 +488,7 @@ namespace Monopoly
                     {
                         btmp = new Bitmap(".\\Resources\\water.png");
                     }
-                    popup = new Popup_carte("ENTREPRISE", ppt.getName(), owned, btmp, purchase);
+                    popup = new Popup_carte(ppt, "ENTREPRISE", ppt.getName(), owned, btmp, purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
@@ -473,10 +503,10 @@ namespace Monopoly
             switch (ppt.getType())
             {
                 case model.Property.PropType.PRIVATE:
-                    popup = new Popup_carte("PROPRIETE", ppt.getName(), false, Color.FromName(((model.PrivateProperty)ppt).getColor()), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice() / 2, true);
+                    popup = new Popup_carte(ppt, "PROPRIETE", ppt.getName(), false, Color.FromName(((model.PrivateProperty)ppt).getColor()), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice() / 2, true);
                     break;
                 case model.Property.PropType.RAILROAD:
-                    popup = new Popup_carte("GARE", ppt.getName(), false, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), true);
+                    popup = new Popup_carte(ppt, "GARE", ppt.getName(), false, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), true);
                     break;
                 case model.Property.PropType.UTILITY:
                     Bitmap btmp;
@@ -488,7 +518,7 @@ namespace Monopoly
                     {
                         btmp = new Bitmap(".\\Resources\\water.png");
                     }
-                    popup = new Popup_carte("ENTREPRISE", ppt.getName(), false, btmp, true);
+                    popup = new Popup_carte(ppt, "ENTREPRISE", ppt.getName(), false, btmp, true);
                     break;
             }
             Popup_enchere enchere = new Popup_enchere(controller.GameManager.GetInstance.playerManager.getPlayers(), popup);

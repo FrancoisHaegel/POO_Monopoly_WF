@@ -98,6 +98,7 @@ namespace Monopoly.controller
             if (!dicesRolled)
             {
                 int[] dices = rollDices();
+                //int[] dices = {1, 1};
                 Form_board.GetInstance.showDices(dices[0], dices[1]);
                 Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " fait un " + dices[0].ToString() + " et un " + dices[1].ToString());
                 if (playerManager.getCurrentPlayer().getJailState())
@@ -286,7 +287,7 @@ namespace Monopoly.controller
         //Send a player to jail
         public void sendToJail(Player player)
         {
-            player.setLocation(boardManager.getJail());
+            playerManager.moovePlayer(player, boardManager.getJail());
             playerManager.sendToJail(player);
         }
 

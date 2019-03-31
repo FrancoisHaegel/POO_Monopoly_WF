@@ -12,18 +12,9 @@ namespace Monopoly
 {
     public partial class Popup_carte : Form
     {
-        private static Popup_carte instance;
-        public static Popup_carte GetInstance
-        {
-            get
-            {
-                if (instance == null || instance.IsDisposed)
-                {
-                    instance = new Popup_carte();
-                }
-                return instance;
-            }
-        }
+
+
+        private model.Property property;
 
         public Popup_carte()
         {
@@ -31,8 +22,9 @@ namespace Monopoly
         }
 
         // Constructeur de carte propriété
-        public Popup_carte(string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7, int prix_8, bool achat)
+        public Popup_carte(model.Property p,  string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7, int prix_8, bool achat)
         {
+            property = p;
             InitializeComponent();
             label1.Text = titre;
             label2.Text = nom;
@@ -45,14 +37,20 @@ namespace Monopoly
             label14.Text = currency + prix_4.ToString();
             label15.Text = currency + prix_3.ToString();
             label16.Text = currency + prix_2.ToString();
-            label17.Text = currency + (prix_1 * 2).ToString(); 
             label18.Text = currency + prix_1.ToString();
 
 
             if (owned)
             {
+                if (p.getMortgaged())
+                {
+                    button_hypotheque.Text = "Racheter hypotèque: +" + currency + (prix_8 * 1.1).ToString();
+                }
+                else
+                {
+                    button_hypotheque.Text = "Hypotéquer: +" + currency + prix_8.ToString();
+                }
                 button_achat_maison.Text = "Acheter une maison: -" + currency + prix_7.ToString();
-                button_hypotheque.Text = "Hypotéquer: +" + currency + prix_8.ToString();
                 button_vente_maison.Visible = true;
                 button_vente_maison.Text = "Vendre une maison: +" + currency + (prix_7 / 2).ToString();
             }
@@ -71,8 +69,9 @@ namespace Monopoly
         }
 
         // Constructeur de carte gare
-        public Popup_carte(string titre, string nom, bool owned, String currency, int prix_1, int prix_2, int prix_3, int prix_4, Image logo, bool achat)
+        public Popup_carte(model.Property p, string titre, string nom, bool owned, String currency, int prix_1, int prix_2, int prix_3, int prix_4, Image logo, bool achat)
         {
+            property = p;
             InitializeComponent();
 
             label1.Text = titre;
@@ -90,12 +89,10 @@ namespace Monopoly
 
             // Cacher les label en trop
             label3.Visible = false;
-            label4.Visible = false;
             label5.Visible = false;
             label10.Visible = false;
             label11.Visible = false;
             label16.Visible = false;
-            label17.Visible = false;
             label18.Visible = false;
             button_achat_maison.Visible = false;
 
@@ -110,6 +107,17 @@ namespace Monopoly
                 button_hypotheque.Visible = false;
                 this.Height -= 40;
             }
+            else
+            {
+                if (p.getMortgaged())
+                {
+                    button_hypotheque.Text = "Racheter hypotèque: +" + currency + 60;
+                }
+                else
+                {
+                    button_hypotheque.Text = "Hypotéquer: +" + currency + 50;
+                }
+            }
 
             // Retrecir la carte 
             this.Height -= 55;
@@ -120,8 +128,9 @@ namespace Monopoly
         }
 
         // Constructeur de carte entreprise
-        public Popup_carte(string titre, string nom, bool owned, Image logo, bool achat)
+        public Popup_carte(model.Property p, string titre, string nom, bool owned, Image logo, bool achat)
         {
+            property = p;
             InitializeComponent();
 
             label1.Text = titre;
@@ -132,7 +141,6 @@ namespace Monopoly
 
             // Cacher les label en trop
             label3.Visible = false;
-            label4.Visible = false;
             label5.Visible = false;
             label7.Visible = false;
             label8.Visible = false;
@@ -143,7 +151,6 @@ namespace Monopoly
             label14.Visible = false;
             label15.Visible = false;
             label16.Visible = false;
-            label17.Visible = false;
             label18.Visible = false;
             button_achat_maison.Visible = false;
 
@@ -158,7 +165,17 @@ namespace Monopoly
                 button_hypotheque.Visible = false;
                 this.Height -= 35;
             }
-
+            else
+            {
+                if (p.getMortgaged())
+                {
+                    button_hypotheque.Text = "Racheter hypotèque: +" + "$" + 60;
+                }
+                else
+                {
+                    button_hypotheque.Text = "Hypotéquer: +" + "$" + 50;
+                }
+            }
             // Retrecir la carte 
             this.Height -= 55;
 
@@ -173,9 +190,6 @@ namespace Monopoly
 
         }
 
-        private void button_hypotheque_Click(object sender, EventArgs e)
-        {
-        }
 
         private void button_acheter_Click(object sender, EventArgs e)
         {
@@ -188,5 +202,24 @@ namespace Monopoly
             controller.GameManager.GetInstance.purchase(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), controller.GameManager.GetInstance.playerManager.getCurrentPlayer().getLocation().getProperty(), false);
             this.Close();
         }
+
+        private void button_achat_maison_Click(object sender, EventArgs e)
+        {
+            controller.GameManager.GetInstance.buyHouse(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), (model.PrivateProperty)property);
+        }
+
+        private void button_vente_maison_Click(object sender, EventArgs e)
+        {
+            controller.GameManager.GetInstance.sellHouse(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), (model.PrivateProperty)property);
+        }
+
+        private void button_hypotheque_Click(object sender, EventArgs e)
+        {
+            if(property.getMortgaged())
+                controller.GameManager.GetInstance.askUnMortgage(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), (model.PrivateProperty)property);
+            else
+                controller.GameManager.GetInstance.askMortgage(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), (model.PrivateProperty)property);
+        }
+
     }
 }
