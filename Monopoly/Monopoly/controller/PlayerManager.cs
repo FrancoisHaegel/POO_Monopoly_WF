@@ -346,6 +346,13 @@ namespace Monopoly.controller
                 }
             }
             players.Remove(killed);
+            foreach(Player p in players)
+            {
+                if (p.getId() > killed.getId())
+                {
+                    p.setId(p.getId() - 1);
+                }
+            }
         }
     }
 }

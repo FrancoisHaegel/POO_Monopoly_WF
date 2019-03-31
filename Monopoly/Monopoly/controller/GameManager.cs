@@ -71,11 +71,10 @@ namespace Monopoly.controller
 
         public void NextTurn()
         {
-            if(playerManager.getPlayers().Count() > 1)
+            if(playerManager.getPlayers().Count() != 1)
             {
                 playerManager.setCurrentPlayer(playerManager.getPlayers()[(playerManager.getCurrentPlayer().getId() + 1) % playerManager.getPlayers().Count()]);
                 Form_board.GetInstance.insert_console("C'est au tour de " + playerManager.getCurrentPlayer().getName());
-                Form_board.GetInstance.insert_console("Solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney());
                 Form_board.GetInstance.insert_console("Faire un choix d'action");
 
                 dicesRolled = false;
@@ -90,8 +89,6 @@ namespace Monopoly.controller
 
         public void startGame()
         {
-            boardManager.describe();
-
             Form_board.GetInstance.insert_console("Il y a " + playerManager.getPlayers().Count().ToString() + " joueurs dans la partie");
 
             playerManager.setCurrentPlayer(playerManager.getPlayers()[0]);
@@ -186,6 +183,7 @@ namespace Monopoly.controller
 
         public void freePlayerRollDice(int[] dices, bool jailedOut)
         {
+            Form_board.GetInstance.insert_console("joueur libre");
             if (dices[0] != dices[1] || (dices[0] == dices[1] && currentPlayerRerollsCount < 2))
             {
                 if (dices[0] != dices[1] || jailedOut)
@@ -268,11 +266,13 @@ namespace Monopoly.controller
             {
                 Form_board.GetInstance.insert_console("Vous avez fait 3 double à la suite, vous allez en prison et votre tour est terminé !");
                 sendToJail(playerManager.getCurrentPlayer());
+                NextTurn();
             }
         }
 
         public void jailedPlayerRollDice(int[] dices)
         {
+            Form_board.GetInstance.insert_console("joueur en prison");
             dicesRolled = true;
 
             if(dices[0] == dices[1])
@@ -751,7 +751,8 @@ namespace Monopoly.controller
                     break;
                 case 9:
                     Form_board.GetInstance.insert_console(cardManager.getChanceCard(9).getDescription());
-                    playerManager.moovePlayer(playerManager.getCurrentPlayer(), boardManager.getJail());  
+                    sendToJail(playerManager.getCurrentPlayer());
+                    NextTurn();
                     break;
                 case 10:
                     Form_board.GetInstance.insert_console(cardManager.getChanceCard(10).getDescription());
@@ -788,7 +789,8 @@ namespace Monopoly.controller
             {
                 case 0:
                     Form_board.GetInstance.insert_console(cardManager.getCommunityCard(0).getDescription());
-                    playerManager.moovePlayer(playerManager.getCurrentPlayer(), boardManager.getJail());
+                    sendToJail(playerManager.getCurrentPlayer());
+                    NextTurn();
                     break;
                 case 1:
                     Form_board.GetInstance.insert_console(cardManager.getCommunityCard(1).getDescription());
