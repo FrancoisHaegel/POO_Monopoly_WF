@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Monopoly.model;
 using Monopoly.exception;
+using System.Drawing;
 
 namespace Monopoly.controller
 {
@@ -24,15 +25,15 @@ namespace Monopoly.controller
             currentPlayer = p;
         }
 
-        public void init(Dictionary<string, string> playerParams, Tile tile)
+        public void init(Dictionary<string, Color> playerParams, Tile tile)
         {
-            foreach (KeyValuePair<string, string> player in playerParams)
+            foreach (KeyValuePair<string, Color> player in playerParams)
             {
                 createPlayer(player.Key, player.Value, tile);
             }
         }
 
-        public int createPlayer(string name, string color, Tile tile)
+        public int createPlayer(string name, Color color, Tile tile)
         {
             players.Add(new Player(nextId, name, color, tile));
 

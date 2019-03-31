@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Monopoly.model;
 using Monopoly.exception;
-
+using System.Drawing;
 
 namespace Monopoly.controller
 {
@@ -13,16 +13,16 @@ namespace Monopoly.controller
     {
         private static GameManager instance;
 
-        private PlayerManager playerManager = new PlayerManager();
-        private BoardManager boardManager = new BoardManager();
-        private CardManager cardManager = new CardManager();
-        private PropertyManager propertyManager = new PropertyManager();
+        public PlayerManager playerManager = new PlayerManager();
+        public BoardManager boardManager = new BoardManager();
+        public CardManager cardManager = new CardManager();
+        public PropertyManager propertyManager = new PropertyManager();
 
-        private static string pathToPrivateProperty = "../../locales/privateProperties.csv";
-        private static string pathToRailroads = "../../locales/railroads.csv";
-        private static string pathToUtilities = "../../locales/utilities.csv";
-        private static string pathToChance = "../../locales/chanceCards.csv";
-        private static string pathToCommunity = "../../locales/communityCards.csv";
+        private static string pathToPrivateProperty = "../../locale/privateProperties.csv";
+        private static string pathToRailroads = "../../locale/railroads.csv";
+        private static string pathToUtilities = "../../locale/utilities.csv";
+        private static string pathToChance = "../../locale/chanceCards.csv";
+        private static string pathToCommunity = "../../locale/communityCards.csv";
 
         private const int MAX_HOUSES = 32;
         private const int MAX_HOTELS = 12;
@@ -46,23 +46,8 @@ namespace Monopoly.controller
             }
         }
 
-        public void Init()
+        public void Init(Dictionary<string, Color> players)
         {
-            Dictionary<string, string> players = new Dictionary<string, string>();
-            Form_board.GetInstance.insert_console("Création des joueurs");
-            string choice = "";
-            while (choice != "OK")
-            {
-                Form_board.GetInstance.insert_console("Entrer un nom de joueur (string)");
-                string player = Console.ReadLine();
-                Form_board.GetInstance.insert_console("Entrer une couleur (string)");
-                string couleur = Console.ReadLine();
-                players.Add(player, couleur);
-
-                Form_board.GetInstance.insert_console("appuyer sur ENTER pour ajouter un autre joueur, ecrire OK pour finir");
-                choice = Console.ReadLine();
-            }
-
             propertyManager.init(pathToPrivateProperty, pathToRailroads, pathToUtilities);
             boardManager.init(propertyManager.getPrivateProperties(), propertyManager.getRailRoads(), propertyManager.getUtilityCompanies());
             playerManager.init(players, boardManager.getStart());
@@ -75,12 +60,7 @@ namespace Monopoly.controller
             //cardManager.describe();
             //boardManager.describe();
 
-            startGame();
-
-            Console.ReadLine();
-
-
-
+            //startGame();
         }
 
         public bool isOver()

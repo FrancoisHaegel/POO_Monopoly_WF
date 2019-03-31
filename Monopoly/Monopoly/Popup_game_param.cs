@@ -38,7 +38,7 @@ namespace Monopoly
             {"Jaune", Color.Gold },
             {"Bleu", Color.RoyalBlue },
             {"Rose", Color.LightPink },
-            {"Noir", Color.Black}
+            {"Beige", Color.Beige}
         };
 
         List<ComboBox> comboBoxes = new List<ComboBox>();
@@ -76,6 +76,19 @@ namespace Monopoly
 
         private void button_jouer_Click(object sender, EventArgs e)
         {
+            Dictionary<string, Color> joueurs = new Dictionary<string, Color>();
+
+            joueurs[textBox_joueur_1.Text] = couleurs[comboBox1.SelectedItem.ToString()];
+            joueurs[textBox_joueur_2.Text] = couleurs[comboBox2.SelectedItem.ToString()];
+            for (int i = 0; i <= disabled.Count; i++)
+            {
+                if (i < (comboBox_nb_joueur.SelectedIndex) * 3)
+                {
+                    if (i % 3 == 1)
+                         joueurs[disabled[i].Text] = couleurs[disabled[i + 1].Text];
+                }
+            }
+            controller.GameManager.GetInstance.Init(joueurs);
             this.Close();
         }
 

@@ -22,8 +22,18 @@ namespace Monopoly
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
-            //Popup_game_param.GetInstance.ShowDialog(this);
-            //Popup_game_param.GetInstance.Dispose();
+            Popup_game_param.GetInstance.ShowDialog(this);
+            Popup_game_param.GetInstance.Dispose();
+        }
+
+        private void Form_board_Load(object sender, EventArgs e)
+        {
+            foreach (model.Player player in GameManager.GetInstance.playerManager.getPlayers())
+            {
+                addJoueur(player.getName(), player.Color);
+                jetons[player.Color] = reserveJetons[player.Color];
+                setJetonIndex(player.Color, 0);
+            }
         }
 
         public static Form_board GetInstance
@@ -42,9 +52,9 @@ namespace Monopoly
         DirectoryInfo dice_images_directory = new DirectoryInfo(".\\Resources\\");
         List<Image> dice_images = new List<Image>();
         int index = 0;
-        
+
         // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
-        Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>()
+        Dictionary<Color, int[]> reserveJetons = new Dictionary<Color, int[]>()
         {
             {Color.DarkOrange, new int[] {0, 0, 20} },
             {Color.MediumTurquoise, new int[] { 0, 0, 20 } },
@@ -52,46 +62,17 @@ namespace Monopoly
             {Color.Gold, new int[] { 0, 0, 20 } },
             {Color.RoyalBlue, new int[] { 0, 0, 20 } },
             {Color.LightPink, new int[] { 0, 0, 20 } },
+            {Color.Beige, new int[] { 0, 0, 20 } },
         };
 
-        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
-        {
-            {"Francois", Tuple.Create(Color.DarkOrange, 100000)},
-            {"Bruno", Tuple.Create(Color.MediumTurquoise, 200)},
-            {"Nathan", Tuple.Create(Color.MediumSeaGreen, 0)},
-            {"Ching", Tuple.Create(Color.Gold, 0)},
-            {"Chang", Tuple.Create(Color.RoyalBlue, 0)},
-            {"Chong", Tuple.Create(Color.LightPink, 0)},
-        };
+        // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
+        Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>();
+
+        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>();
 
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
-        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>()
-        {
-            {"Francois", new List<Tuple<String, Color, int, int>>{  } },
-            {"Bruno", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Hautepierre", Color.Red, 0, 60), Tuple.Create("Neuhof", Color.Red, 1, 48) } },
-            {"Nathan", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Gare", Color.Blue, 4, 56), Tuple.Create("Meinau", Color.Blue, 5 , 24) } },
-            {"Ching", new List<Tuple<String, Color, int, int>>{} },
-            {"Chang", new List<Tuple<String, Color, int, int>>{} },
-            {"Chong", new List<Tuple<String, Color, int, int>>{}},
-        };
-
-
-        private void init_test()
-        {
-            /*
-            addJoueur("Francois", Color.DarkOrange);
-            addJoueur("Bruno", Color.MediumTurquoise);
-            addJoueur("Nathan", Color.MediumSeaGreen);
-            addJoueur("Ching", Color.Gold);
-            addJoueur("Chang", Color.RoyalBlue);
-            addJoueur("Chong", Color.LightPink);
-            */
-
-            addPropriete("Francois", "Elsau", Color.Gold, 2);
-            //addPropriete("Francois", "Aloutettes", Color.Gold, 1);
-            //addPropriete("Francois", "Gare", Color.Blue, 3);
-        }
+        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>();
 
         // Affiche les images des des correspondants au entier donne
         public void showDices(int dice_A, int dice_B)
@@ -324,7 +305,7 @@ namespace Monopoly
 
         private void button_out_of_jail_Click(object sender, EventArgs e)
         {
-            init_test();
+
         }
 
         private void button_mortage_Click(object sender, EventArgs e)
@@ -525,5 +506,7 @@ namespace Monopoly
         {
 
         }
+
+
     }
 }
