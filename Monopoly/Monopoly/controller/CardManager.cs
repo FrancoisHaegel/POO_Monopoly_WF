@@ -14,16 +14,33 @@ namespace Monopoly.controller
         private List<CardChance> chanceCards = new List<CardChance>();
         private List<CardCommunity> communityCards = new List<CardCommunity>();
 
+        private static Random rng = new Random();
+
         public void init(string pathToCommunity, string pathToChance)
         {
             try
             {
                 communityCards = File.ReadAllLines(pathToCommunity).Skip(1).Select(v => CardCommunity.FromCsv(v)).ToList();
                 chanceCards = File.ReadAllLines(pathToChance).Skip(1).Select(v => CardChance.FromCsv(v)).ToList();
+                shuffle(communityCards);
+                shuffle(chanceCards);
             }
             catch (DirectoryNotFoundException e)
             {
                 Form_board.GetInstance.insert_console("Error : Cannot find path : " + e);
+            }
+        }
+
+        public void shuffle<T>(List<T> list)
+        {
+            int n = list.Count();
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }
         }
 
