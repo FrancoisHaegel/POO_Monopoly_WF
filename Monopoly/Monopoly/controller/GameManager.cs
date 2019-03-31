@@ -124,100 +124,138 @@ namespace Monopoly.controller
             if (!dicesRolled)
             {
                 int[] dices = rollDices();
-                //int[] dices = { 3, 4 };
-                //int[] dices = {5, 5};
                 Form_board.GetInstance.showDices(dices[0], dices[1]);
-
                 Form_board.GetInstance.insert_console("Vous avez fait un " + dices[0].ToString() + " et un " + dices[1].ToString());
-
-                if (dices[0] != dices[1] || (dices[0] == dices[1] && currentPlayerRerollsCount < 2))
+                /*if (playerManager.getCurrentPlayer().getJailState())
                 {
-                    if (dices[0] != dices[1])
-                    {
-                        dicesRolled = true;
-                    }
-                    else
-                    {
-                        currentPlayerRerollsCount++;
-                        Form_board.GetInstance.insert_console("Vous avez fait un double, vous pouvez relancer les dés");
-                    }
-
-                    playerManager.moovePlayer(playerManager.getCurrentPlayer(), dices[0] + dices[1]);
-
-                    Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " est atterit sur la case : ");
-                    playerManager.getCurrentPlayer().getLocation().describe();
-
-                    if (playerManager.getCurrentPlayer().getLocation().getProperty() != null)
-                    {
-                        landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
-                    }
-                    else
-                    {
-                        if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.START)
-                        {
-                            Form_board.GetInstance.insert_console("Vous etes atterit sur la case Départ, vou collectez 200$");
-                            playerManager.giveMoney(playerManager.getCurrentPlayer(), 200);
-                            Form_board.GetInstance.insert_console("Nouveau solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney().ToString());
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.JAIL)
-                        {
-                            Form_board.GetInstance.insert_console("Vous êtes en prison, vous ne pouvez plus avancer");
-                            sendToJail(playerManager.getCurrentPlayer());
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.GO_TO_JAIL)
-                        {
-                            Form_board.GetInstance.insert_console("Direction la prison !");
-                            sendToJail(playerManager.getCurrentPlayer());
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.FREE_PARKING)
-                        {
-                            Form_board.GetInstance.insert_console("Vous pouvez restez ici tranquillement");
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.CHANCE)
-                        {
-                            Card card = cardManager.drawCard(Card.CardType.CHANCE);
-                            card.describe();
-                            if (card.getId() == 7)
-                            {
-                                Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
-                                playerManager.giveCard(playerManager.getCurrentPlayer(), cardManager.getChanceCard(7));
-                            }
-                            else
-                            {
-                                chanceAction(card.getId());
-                            }
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.COMMUNITY_CHEST)
-                        {
-                            Card card = cardManager.drawCard(Card.CardType.COMMUNITY);
-                            card.describe();
-                            if (card.getId() == 8)
-                            {
-                                Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
-                                playerManager.giveCard(playerManager.getCurrentPlayer(), cardManager.getChanceCard(8));
-                            }
-                            else
-                            {
-                                communityAction(card.getId());
-                            }
-                        }
-                        else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.TAX)
-                        {
-                            Form_board.GetInstance.insert_console("Vous devez payez la tax de richesse qui est de 100$");
-                            payTax(playerManager.getCurrentPlayer(), 100);
-                        }
-                    }
+                    jailedPlayerRollDice(dices);
                 }
                 else
                 {
-                    Form_board.GetInstance.insert_console("Vous avez fait 3 double à la suite, vous allez en prison et votre tour est terminé !");
-                    sendToJail(playerManager.getCurrentPlayer());
-                }
+                    freePlayerRollDice(dices, false);
+                }*/
             }
             else
             {
                 Form_board.GetInstance.insert_console("Vous avez déjà lancé les dés ce tour");
             }
+        }
+
+        public void freePlayerRollDice(int[] dices, bool jailedOut)
+        {
+            if (dices[0] != dices[1] || (dices[0] == dices[1] && currentPlayerRerollsCount < 2))
+            {
+                if (dices[0] != dices[1] || jailedOut)
+                {
+                    dicesRolled = true;
+                }
+                else
+                {
+                    currentPlayerRerollsCount++;
+                    Form_board.GetInstance.insert_console("Vous avez fait un double, vous pouvez relancer les dés");
+                }
+
+                playerManager.moovePlayer(playerManager.getCurrentPlayer(), dices[0] + dices[1]);
+
+                Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " est atterit sur la case : ");
+                playerManager.getCurrentPlayer().getLocation().describe();
+
+                if (playerManager.getCurrentPlayer().getLocation().getProperty() != null)
+                {
+                    landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
+                }
+                else
+                {
+                    if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.START)
+                    {
+                        Form_board.GetInstance.insert_console("Vous etes atterit sur la case Départ, vou collectez 200$");
+                        playerManager.giveMoney(playerManager.getCurrentPlayer(), 200);
+                        Form_board.GetInstance.insert_console("Nouveau solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney().ToString());
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.JAIL)
+                    {
+                        Form_board.GetInstance.insert_console("Vous êtes en prison, vous ne pouvez plus avancer");
+                        sendToJail(playerManager.getCurrentPlayer());
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.GO_TO_JAIL)
+                    {
+                        Form_board.GetInstance.insert_console("Direction la prison !");
+                        sendToJail(playerManager.getCurrentPlayer());
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.FREE_PARKING)
+                    {
+                        Form_board.GetInstance.insert_console("Vous pouvez restez ici tranquillement");
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.CHANCE)
+                    {
+                        Card card = cardManager.drawCard(Card.CardType.CHANCE);
+                        card.describe();
+                        if (card.getId() == 7)
+                        {
+                            Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
+                            playerManager.giveCard(playerManager.getCurrentPlayer(), cardManager.getChanceCard(7));
+                        }
+                        else
+                        {
+                            chanceAction(card.getId());
+                        }
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.COMMUNITY_CHEST)
+                    {
+                        Card card = cardManager.drawCard(Card.CardType.COMMUNITY);
+                        card.describe();
+                        if (card.getId() == 8)
+                        {
+                            Form_board.GetInstance.insert_console("La carte \"Get out of jail\" a été ajoutée à vos cartes");
+                            playerManager.giveCard(playerManager.getCurrentPlayer(), cardManager.getChanceCard(8));
+                        }
+                        else
+                        {
+                            communityAction(card.getId());
+                        }
+                    }
+                    else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.TAX)
+                    {
+                        Form_board.GetInstance.insert_console("Vous devez payez la tax de richesse qui est de 100$");
+                        payTax(playerManager.getCurrentPlayer(), 100);
+                    }
+                }
+            }
+            else
+            {
+                Form_board.GetInstance.insert_console("Vous avez fait 3 double à la suite, vous allez en prison et votre tour est terminé !");
+                sendToJail(playerManager.getCurrentPlayer());
+            }
+        }
+
+        public void jailedPlayerRollDice(int[] dices)
+        {
+            dicesRolled = true;
+
+            if(dices[0] == dices[1])
+            {
+                Form_board.GetInstance.insert_console("Vous avez fait un double, vous sortez de prison !");
+                playerManager.getOutOfJail(playerManager.getCurrentPlayer());
+                playerManager.getCurrentPlayer().resetTurnInJail();
+                freePlayerRollDice(dices, true);
+            }
+            else
+            {
+                playerManager.getCurrentPlayer().increaseTurnInJail();
+                if(playerManager.getCurrentPlayer().getTurnInJail() == 3)
+                {
+                    Form_board.GetInstance.insert_console("C'est votre 3e tour en prison, vous êtes obligé de payer 50$");
+                    payTax(playerManager.getCurrentPlayer(), 50);
+                    playerManager.getOutOfJail(playerManager.getCurrentPlayer());
+                    playerManager.getCurrentPlayer().resetTurnInJail();
+                    freePlayerRollDice(dices, true);
+                }
+                else
+                {
+                    Form_board.GetInstance.insert_console("C'est votre " + playerManager.getCurrentPlayer().getTurnInJail().ToString() + "e tour en prison, vous pouvez sortir en payant 50$ ou en utilisant la carte magique");
+                }
+            }
+
         }
 
         public void clickEndTurn()
@@ -228,81 +266,28 @@ namespace Monopoly.controller
                 Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
         }
 
-        public void printChoices()
+        public void clickMortgage(int index)
         {
-            Form_board.GetInstance.insert_console("Faites un choix !");
+            Property p = boardManager.getBoard()[index].getProperty();
+            askMortgage(p.getOwner(), p);
+        }
 
-            switch (getInput())
-            {
-                // Roll the dices
-                case 1:
-                    
-                    break;
-                case 2:
-                    // demander une hypothèque
-                    try
-                    {
-                        askMortgage(playerManager.getCurrentPlayer());
-                    }
-                    catch (ImpossibleMortgageException)
-                    {
-                        Form_board.GetInstance.insert_console("Vous n'avez pas de propriété à hypothéquer");
-                    }
-                    break;
-                case 3:
-                    // demander de racheter une maison hypothéquée
-                    try
-                    {
-                        askUnMortgage(playerManager.getCurrentPlayer());
-                    }
-                    catch (ImpossibleMortgageException)
-                    {
-                        Form_board.GetInstance.insert_console("Vous n'avez pas de propriété à racheter");
-                    }
+        public void clickUnMortgage(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            askUnMortgage(p.getOwner(), p);
+        }
 
-                    break;
-                case 4:
-                    // buy a house
-                    if (playerManager.getCurrentPlayer().getproperties().Count > 0)
-                    {
-                        Form_board.GetInstance.insert_console("Voici la liste de vos propriétés privées : ");
-                        foreach (PrivateProperty p in playerManager.getCurrentPlayer().getproperties())
-                        {
-                            p.describe();
-                        }
-                        Form_board.GetInstance.insert_console("Sur laquelle souhaitez vous construire une maison ?");
-                        buyHouse(playerManager.getCurrentPlayer(), propertyManager.getPrivateProperties()[getInput()]);
-                    }
-                    else
-                    {
-                        Form_board.GetInstance.insert_console("Vous n'avez pas de propriétés");
-                    }
-                    break;
-                case 5:
-                    // sell a house
-                    if (playerManager.getCurrentPlayer().getproperties().Count > 0)
-                    {
-                        Form_board.GetInstance.insert_console("Voici la liste de vos propriétés privées sur lesquelles vous avez des maisons : ");
-                        foreach (PrivateProperty p in playerManager.getCurrentPlayer().getproperties())
-                        {
-                            if (p.getHousesCount() > 0)
-                            {
-                                p.describe();
-                            }
-                        }
-                        Form_board.GetInstance.insert_console("Sur laquelle souhaitez vous vendre une maison ?");
-                        sellHouse(playerManager.getCurrentPlayer(), propertyManager.getPrivateProperties()[getInput()]);
-                    }
-                    else
-                    {
-                        Form_board.GetInstance.insert_console("Vous n'avez pas de propriétés");
-                    }
-                    break;
-                default:
-                    Form_board.GetInstance.insert_console("Invalid Input");
-                    getInput();
-                    break;
-            }
+        public void clickBuyHouse(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            buyHouse(p.getOwner(), (PrivateProperty)p);
+        }
+
+        public void clickSellHouse(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            sellHouse(p.getOwner(), (PrivateProperty)p);
         }
 
         //Send a player to jail
@@ -447,7 +432,7 @@ namespace Monopoly.controller
                 if (property.getHousesCount() == 5)
                 {
                     Form_board.GetInstance.insert_console("Vous vendez l'hotel sur cette propriété pour " + (property.getHouseCost() * 4 / 2).ToString() + "$, il ne reste plus rien !");
-                    playerManager.giveMoney(player, property.getHouseCost() * 4 / 2);
+                    playerManager.giveMoney(player, property.getHouseCost() * 6 / 2);
                     property.resetCurrentRent();
                 }
                 else
@@ -518,58 +503,49 @@ namespace Monopoly.controller
             }
         }
 
-        public void askMortgage(Player player)
+        public int playerPropertiesValue(Player player)
         {
-            if (player.getproperties().Count() > 0)
+            int res = 0;
+            foreach (Property p in player.getproperties())
             {
-                Form_board.GetInstance.insert_console("Votre solde courrant est de " + player.getMoney().ToString());
-                Form_board.GetInstance.insert_console("Voici la liste de vos propriétés :");
-                foreach (Property p in player.getproperties())
+                if (p.getType() == Property.PropType.PRIVATE)
                 {
-                    p.describe();
-                }
-                Form_board.GetInstance.insert_console("Laquelle souhaitez vous hypothéquer 50% de son prix ?");
-                Property property = propertyManager.getPrivateProperties()[getInput()];
-                if(property.getHousesCount() == 0)
-                {
-                    playerManager.mortgage(player, property);
-                    Form_board.GetInstance.insert_console("Votre nouveau solde est de : " + player.getMoney().ToString() + "$");
+                    if (p.getHousesCount() == 5)
+                    {
+                        res += (((PrivateProperty)p).getHouseCost() * 6 / 2);
+                    }
+                    else
+                    {
+                        res += (((PrivateProperty)p).getHouseCost() * p.getHousesCount());
+                    }
                 }
                 else
                 {
-                    Form_board.GetInstance.insert_console("Vous ne pouvez pas hypothéquer une propriété qui a des maisons");
-                }          
+                    res += (p.getPrice() / 2);
+                }
+            }
+            return res;
+        }
+
+        public void askMortgage(Player player, Property property)
+        {
+            if(property.getHousesCount() == 0)
+            {
+                playerManager.mortgage(player, property);
+                Form_board.GetInstance.insert_console("Votre nouveau solde est de : " + player.getMoney().ToString() + "$");
             }
             else
             {
-                throw new ImpossibleMortgageException();
-            }
+                Form_board.GetInstance.insert_console("Vous ne pouvez pas hypothéquer une propriété qui a des maisons");
+            }                 
         }
+
         public void forceMortgage(Player player, int toPay)
         {
-            if (player.getproperties().Count() > 0)
+            if (playerPropertiesValue(player) >= toPay)
             {
-
-                Form_board.GetInstance.insert_console("Votre dette est de " + toPay.ToString());
-                Form_board.GetInstance.insert_console("Votre solde courrant est de " + player.getMoney().ToString());
-                Form_board.GetInstance.insert_console("Voici la liste de vos propriétés :");
-                foreach (Property p in player.getproperties())
-                {
-                    p.describe();
-                }
-                Form_board.GetInstance.insert_console("Laquelle souhaitez vous hypothéquer 50% de son prix ?");
-                Property property = propertyManager.getPrivateProperties()[getInput()];
-                try
-                {
-                    playerManager.mortgage(player, property);
-                    Form_board.GetInstance.insert_console("Votre nouveau solde est de : " + player.getMoney().ToString() + "$");
-                }
-                catch (ImpossibleMortgageException)
-                {
-                    Form_board.GetInstance.insert_console("Il y a des maisons sur cette propriété, voulez vous en vendre ?");
-                    // décrémenter la dette de l'hypoteque à chaque fois qu'une maison est vendue
-                }
-                
+                Form_board.GetInstance.insert_console(player.getName() + " est endetté, il est obligé d'hypotéquer avant que la partie ne puisse continuée");
+                //Form_board.FAIRE_UNE_PAUSE();
             }
             else
             {
@@ -577,17 +553,8 @@ namespace Monopoly.controller
             }
         }
 
-        public void askUnMortgage(Player player)
+        public void askUnMortgage(Player player, Property property)
         {
-            Form_board.GetInstance.insert_console("Voici la liste de vos propriétés que vous pouvez racheter :");
-            foreach (Property p in player.getMortagedProperties())
-            {
-                p.describe();
-            }
-
-            Form_board.GetInstance.insert_console("Laquelle souhaitez vous récupérer 110% de son prix d'hypothèque ?");
-            Property property = propertyManager.getPrivateProperties()[getInput()];
-
             try
             {
                 playerManager.unmortgage(player, property);

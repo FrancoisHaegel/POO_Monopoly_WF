@@ -19,6 +19,11 @@ namespace Monopoly.model
         private List<Property> mortgagedProperties;
         private List<Card> cards;
         private Tile location;
+        
+        public int getTurnInJail()
+        {
+            return turnInJail;
+        }
 
         public Color Color
         {
@@ -61,6 +66,16 @@ namespace Monopoly.model
         public List<Card> getCards()
         {
             return cards;
+        }
+
+        public void resetTurnInJail()
+        {
+            turnInJail = 0;
+        }
+
+        public void increaseTurnInJail()
+        {
+            turnInJail++;
         }
 
         public void addProperty(Property p)
