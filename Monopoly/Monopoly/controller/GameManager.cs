@@ -89,8 +89,7 @@ namespace Monopoly.controller
 
         public void endGame()
         {
-            Form_board.GetInstance.insert_console("Fin de la partie");
-            Form_board.GetInstance.insert_console("Le gagnant est " + playerManager.getPlayers()[0].getName() + " !");
+            MessageBox.Show("Fin de la partie, le gagnant est " + playerManager.getPlayers()[0].getName() + " !");
         }
 
         public void clickRollDices()
@@ -112,7 +111,7 @@ namespace Monopoly.controller
             }
             else
             {
-                Form_board.GetInstance.insert_console("Vous avez déjà lancé les dés ce tour");
+                MessageBox.Show("Vous avez déjà lancé les dés ce tour");
             }
         }
 
@@ -121,7 +120,7 @@ namespace Monopoly.controller
             if (dicesRolled)
                 NextTurn();
             else
-                Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
+                MessageBox.Show("Vous êtes obligé de lancer les dés pour finir votre tour");
         }
 
         public void clickMortgage(int index)
@@ -198,7 +197,6 @@ namespace Monopoly.controller
                     {
                         Form_board.GetInstance.insert_console("Vous etes atterit sur la case Départ, vou collectez 200$");
                         playerManager.giveMoney(playerManager.getCurrentPlayer(), 200);
-                        Form_board.GetInstance.insert_console("Nouveau solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney().ToString());
                     }
                     else if (playerManager.getCurrentPlayer().getLocation().getType() == Tile.TileType.JAIL)
                     {
@@ -257,7 +255,6 @@ namespace Monopoly.controller
 
         public void jailedPlayerRollDice(int[] dices)
         {
-            Form_board.GetInstance.insert_console("joueur en prison");
             dicesRolled = true;
 
             if(dices[0] == dices[1])
@@ -350,7 +347,6 @@ namespace Monopoly.controller
         //Ask the player if he wants to buy an ownerless property
         public void askForPurchase(Player player, Property property)
         {
-            Form_board.GetInstance.insert_console("La propriété de cette case est libre, voulez vous l'acheter pour " + property.getPrice().ToString() + " ?");
             Form_board.GetInstance.popupCarte(property.Tile.getIndex(), true);
         }
 
@@ -376,7 +372,6 @@ namespace Monopoly.controller
                     {
                         if (property.getHousesCount() < 4)
                         {
-                            Form_board.GetInstance.insert_console("Le prix d'une maison pour cette propriété est de " + property.getHouseCost().ToString() + "$");
                             try
                             {
                                 playerManager.takeMoney(player, property.getHouseCost());
@@ -385,14 +380,13 @@ namespace Monopoly.controller
                             }
                             catch (NotEnoughMoneyException)
                             {
-                                Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent pour acheter une maison");
+                                MessageBox.Show("Vous n'avez pas assez d'argent pour acheter une maison");
                             }
                         }
                         else
                         {
                             if (hotelsCount < MAX_HOTELS)
                             {
-                                Form_board.GetInstance.insert_console("Vous avez déjà 4 amisons, un hotel est construit à la place pour " + property.getHouseCost().ToString() + "$");
                                 try
                                 {
                                     playerManager.takeMoney(player, property.getHouseCost());
@@ -401,29 +395,29 @@ namespace Monopoly.controller
                                 }
                                 catch (NotEnoughMoneyException)
                                 {
-                                    Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent pour acheter l'hotel");
+                                    MessageBox.Show("Vous n'avez pas assez d'argent pour acheter l'hotel");
                                 }
                             }
                             else
                             {
-                                Form_board.GetInstance.insert_console("Le nombre d'hotels maximum est déjà atteint");
+                                MessageBox.Show("Le nombre d'hotels maximum est déjà atteint");
                             }
                         }
                     }
                     else
                     {
-                        Form_board.GetInstance.insert_console("Vous avez déjà un hotel sur cette propriété, c'est le maximum");
+                        MessageBox.Show("Vous avez déjà un hotel sur cette propriété, c'est le maximum");
                     }
 
                 }
                 else
                 {
-                    Form_board.GetInstance.insert_console("Vous n'avez pas toutes propriétés de cette rue");
+                    MessageBox.Show("Vous n'avez pas toutes propriétés de cette rue");
                 }
             }
             else
             {
-                Form_board.GetInstance.insert_console("Le nombre de maisons maximum est déjà atteint");
+                MessageBox.Show("Le nombre de maisons maximum est déjà atteint");
             }
 
         }
@@ -447,14 +441,14 @@ namespace Monopoly.controller
             }
             else
             {
-                Form_board.GetInstance.insert_console("Vous n'avez pas de maisons sur cette propriété");
+                MessageBox.Show("Vous n'avez pas de maisons sur cette propriété");
             }
         }
 
         //Make the player pay his rent when he lands on a tile which has property already owned
         public void payPrivateRent(Player player, Property property)
         {
-            Form_board.GetInstance.insert_console(property.getOwner().getName() + " detient cette propriété,  vous devez lui donner " + property.getCurrentRent().ToString() + "$");
+            Form_board.GetInstance.insert_console(property.getOwner().getName() + " detient cette propriété, vous devez lui donner " + property.getCurrentRent().ToString() + "$");
             try
             {
                 playerManager.takeMoney(player, property.getCurrentRent());
@@ -463,7 +457,7 @@ namespace Monopoly.controller
             //If the player hasn't enough money to pay the rent
             catch (NotEnoughMoneyException)
             {
-                Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
+                MessageBox.Show("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
                 try
                 {
                     forceMortgage(player, property.getCurrentRent() - player.getMoney());
@@ -471,7 +465,7 @@ namespace Monopoly.controller
                 //If the player can't mortgage enough to pay his dept
                 catch (ImpossibleMortgageException)
                 {
-                    Form_board.GetInstance.insert_console("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
+                    MessageBox.Show("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
                     NextTurn();
                     playerManager.killPlayer(player, property.getOwner());
                 }
@@ -491,7 +485,7 @@ namespace Monopoly.controller
             }
             catch (NotEnoughMoneyException)
             {
-                Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
+                MessageBox.Show("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
                 try
                 {
                     forceMortgage(player, property.getCurrentRent() - player.getMoney());
@@ -499,7 +493,7 @@ namespace Monopoly.controller
                 //If the player can't mortgage enough to pay his dept
                 catch (ImpossibleMortgageException)
                 {
-                    Form_board.GetInstance.insert_console("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
+                    MessageBox.Show("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
                     NextTurn();
                     playerManager.killPlayer(player, property.getOwner());
                 }
@@ -539,7 +533,7 @@ namespace Monopoly.controller
             }
             else
             {
-                Form_board.GetInstance.insert_console("Vous ne pouvez pas hypothéquer une propriété qui a des maisons");
+                MessageBox.Show("Vous ne pouvez pas hypothéquer une propriété qui a des maisons");
             }                 
         }
 
@@ -547,7 +541,7 @@ namespace Monopoly.controller
         {
             if (playerPropertiesValue(player) >= toPay)
             {
-                Form_board.GetInstance.insert_console(player.getName() + " est endetté, il est obligé d'hypotéquer avant que la partie ne puisse continuée");
+                MessageBox.Show(player.getName() + " est endetté, il est obligé d'hypotéquer avant que la partie ne puisse continuée");
                 //Form_board.FAIRE_UNE_PAUSE();
             }
             else
@@ -564,7 +558,7 @@ namespace Monopoly.controller
             }
             catch (NotEnoughMoneyException)
             {
-                Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent pour racheter cette propriété");
+                MessageBox.Show("Vous n'avez pas assez d'argent pour racheter cette propriété");
             }
         }
 
@@ -577,7 +571,7 @@ namespace Monopoly.controller
             //Si le joueur n'a pas assez d'argent pour payer son loyer
             catch (NotEnoughMoneyException)
             {
-                Form_board.GetInstance.insert_console("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
+                MessageBox.Show("Vous n'avez pas assez d'argent, vous etes forcé de faire une ipothèque");
                 try
                 {
                     forceMortgage(player, amount - player.getMoney());
@@ -585,7 +579,7 @@ namespace Monopoly.controller
                 //Si le joueur n'a plus de propriété à ipothéquer ou pas assez
                 catch (ImpossibleMortgageException)
                 {
-                    Form_board.GetInstance.insert_console("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
+                    MessageBox.Show("Vous ne pouvez pas faire d'ipothèque, vous avez perdu la partie !");
                     NextTurn();
                     playerManager.killPlayer(player, null);
                 }
@@ -615,12 +609,12 @@ namespace Monopoly.controller
                         }
                         else
                         {
-                            Form_board.GetInstance.insert_console("Vous ne pouvez pas proposer plus que ce que contient votre porte-monnaie");
+                            MessageBox.Show("Vous ne pouvez pas proposer plus que ce que contient votre porte-monnaie");
                         }
                     }
                     else
                     {
-                        Form_board.GetInstance.insert_console("Entrez une valeur valide pour l'enchère");
+                        MessageBox.Show("Entrez une valeur valide pour l'enchère");
                     }
             }
             Player player = bids.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
