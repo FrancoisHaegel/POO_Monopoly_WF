@@ -451,9 +451,11 @@ namespace Monopoly
         private void popupCarte(String nom)
         {
             Popup_carte popup = new Popup_carte("ENTREPRISE", nom, true, new Bitmap(".\\Resources\\water.png"));
-            popup.ShowDialog(this);
+            Popup_enchere enchere = new Popup_enchere(new List<String> { "Nathan", "Francis", "Bruno" }, popup);
+            enchere.ShowDialog(this);
             popup.Dispose();
-
+            enchere.Dispose();
+            /*
             popup = new Popup_carte("ENTREPRISE", nom, false, new Bitmap(".\\Resources\\water.png"));
             popup.ShowDialog(this);
             popup.Dispose();
@@ -466,7 +468,7 @@ namespace Monopoly
             popup.ShowDialog(this);
             popup.Dispose();
 
-            popup = new Popup_carte("PROPRIETE", nom,false, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100);
+            popup = new Popup_carte("PROPRIETE", nom,false, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
             popup.ShowDialog(this);
             popup.Dispose();
 
@@ -478,9 +480,10 @@ namespace Monopoly
             popup.ShowDialog(this);
             popup.Dispose();
 
-            popup = new Popup_carte("PROPRIETE", nom,true, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100);
+            popup = new Popup_carte("PROPRIETE", nom,true, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
             popup.ShowDialog(this);
             popup.Dispose();
+            */
         }
 
 

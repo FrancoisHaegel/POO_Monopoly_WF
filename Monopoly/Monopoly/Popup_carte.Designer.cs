@@ -51,6 +51,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.button_achat_maison = new System.Windows.Forms.Button();
             this.pictureBox_color = new System.Windows.Forms.PictureBox();
+            this.button_vente_maison = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_color)).BeginInit();
             this.SuspendLayout();
@@ -61,7 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_close.BackColor = System.Drawing.Color.White;
             this.button_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_close.Location = new System.Drawing.Point(12, 446);
+            this.button_close.Location = new System.Drawing.Point(12, 466);
             this.button_close.Name = "button_close";
             this.button_close.Size = new System.Drawing.Size(362, 23);
             this.button_close.TabIndex = 0;
@@ -75,7 +76,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_hypotheque.BackColor = System.Drawing.Color.White;
             this.button_hypotheque.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_hypotheque.Location = new System.Drawing.Point(12, 417);
+            this.button_hypotheque.Location = new System.Drawing.Point(12, 437);
             this.button_hypotheque.Name = "button_hypotheque";
             this.button_hypotheque.Size = new System.Drawing.Size(362, 23);
             this.button_hypotheque.TabIndex = 1;
@@ -296,7 +297,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button_achat_maison.BackColor = System.Drawing.Color.White;
             this.button_achat_maison.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_achat_maison.Location = new System.Drawing.Point(13, 388);
+            this.button_achat_maison.Location = new System.Drawing.Point(12, 379);
             this.button_achat_maison.Name = "button_achat_maison";
             this.button_achat_maison.Size = new System.Drawing.Size(361, 23);
             this.button_achat_maison.TabIndex = 22;
@@ -312,12 +313,27 @@
             this.pictureBox_color.TabIndex = 23;
             this.pictureBox_color.TabStop = false;
             // 
+            // button_vente_maison
+            // 
+            this.button_vente_maison.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_vente_maison.BackColor = System.Drawing.Color.White;
+            this.button_vente_maison.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_vente_maison.Location = new System.Drawing.Point(12, 408);
+            this.button_vente_maison.Name = "button_vente_maison";
+            this.button_vente_maison.Size = new System.Drawing.Size(361, 23);
+            this.button_vente_maison.TabIndex = 24;
+            this.button_vente_maison.Text = "Vendre une maison: +$50";
+            this.button_vente_maison.UseVisualStyleBackColor = false;
+            this.button_vente_maison.Visible = false;
+            // 
             // Popup_carte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
-            this.ClientSize = new System.Drawing.Size(386, 481);
+            this.ClientSize = new System.Drawing.Size(386, 501);
+            this.Controls.Add(this.button_vente_maison);
             this.Controls.Add(this.button_achat_maison);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
@@ -343,7 +359,7 @@
             this.Controls.Add(this.pictureBox_color);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Popup_carte";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Popup_carte";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_color)).EndInit();
@@ -377,5 +393,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button button_achat_maison;
         private System.Windows.Forms.PictureBox pictureBox_color;
+        private System.Windows.Forms.Button button_vente_maison;
     }
 }
