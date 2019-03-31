@@ -1,9 +1,9 @@
 ﻿id;name;color;cost;house_cost;rent[0];rent[1];rent[2];rent[3];rent[4];rent[5]
 0;Mediterranean Ave.;purple;60;50;2;10;30;90;160;250
 1;Baltic Ave.;purple;60;50;4;20;60;180;320;450
-2;Oriental Ave.;light blue;100;50;6;30;90;270;400;550
-3;Vermont Ave.;light blue;100;50;6;30;90;270;400;550
-4;Connecticut Ave.;light blue;120;50;8;40;100;300;450;600
+2;Oriental Ave.;LightBlue;100;50;6;30;90;270;400;550
+3;Vermont Ave.;LightBlue;100;50;6;30;90;270;400;550
+4;Connecticut Ave.;LightBlue;120;50;8;40;100;300;450;600
 5;St. Charles Place;magenta;140;100;10;50;150;450;625;750
 6;States Ave.;magenta;140;100;10;50;150;450;625;750
 7;Virginia Ave.;magenta;160;100;12;60;180;500;700;900

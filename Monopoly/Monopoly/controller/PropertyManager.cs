@@ -37,24 +37,24 @@ namespace Monopoly.controller
             }
             catch (DirectoryNotFoundException e)
             {
-                Console.WriteLine("Error : Cannot find path : ", e);
+                Form_board.GetInstance.insert_console("Error : Cannot find path : " + e);
             }
         }
 
         public void describe()
         {
-            Console.WriteLine("Descirption des Property :");
-            Console.WriteLine("Descirption des Railroads :");
+            Form_board.GetInstance.insert_console("Descirption des Property :");
+            Form_board.GetInstance.insert_console("Descirption des Railroads :");
             foreach (Railroad r in railRoads)
             {
                 r.describe();
             }
-            Console.WriteLine("Descirption des Utilities :");
+            Form_board.GetInstance.insert_console("Descirption des Utilities :");
             foreach (Utility u in utilityCompanies)
             {
                 u.describe();
             }
-            Console.WriteLine("Descirption des PrivateProperties :");
+            Form_board.GetInstance.insert_console("Descirption des PrivateProperties :");
             foreach (PrivateProperty pp in privateProperties)
             {
                 pp.describe();

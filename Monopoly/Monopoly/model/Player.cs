@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Monopoly.model
 {
-    class Player
+    public class Player
     {
         private int id;
         private string name;
@@ -149,15 +149,15 @@ namespace Monopoly.model
 
         public void describe()
         {
-            Console.WriteLine("Id : " + id.ToString() + " - name : " + name + " - color : " + color + " - money : " + money.ToString() + " - inJail : " + inJail.ToString());
-            Console.Write("Location : ");
+            Form_board.GetInstance.insert_console("Id : " + id.ToString() + " - name : " + name + " - color : " + color + " - money : " + money.ToString() + " - inJail : " + inJail.ToString());
+            Form_board.GetInstance.insert_console("Location : ");
             location.describe();
-            Console.WriteLine("Properties : ");
+            Form_board.GetInstance.insert_console("Properties : ");
             foreach (Property p in properties)
             {
                 p.describe();
             }
-            Console.WriteLine("Cards : ");
+            Form_board.GetInstance.insert_console("Cards : ");
             foreach (Card c in cards)
             {
                 c.describe();

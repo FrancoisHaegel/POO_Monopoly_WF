@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Monopoly.model
 {
-    abstract class Card
+    public abstract class Card
     {
         private string description;
 

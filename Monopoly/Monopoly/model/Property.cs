@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Monopoly.model
 {
-    abstract class Property
+    public abstract class Property
     {
         private int id;
         private int price;
+        private Tile tile;
         private Player owner;
         private bool mortgaged;
         private string name;
@@ -17,6 +18,18 @@ namespace Monopoly.model
         private int housesCount;
         public enum PropType { PRIVATE, RAILROAD, UTILITY };
         private PropType type;
+
+        public Tile Tile
+        {
+            get
+            {
+                return tile;
+            }
+            set
+            {
+                tile = value;
+            }
+        }
 
         public int getId()
         {

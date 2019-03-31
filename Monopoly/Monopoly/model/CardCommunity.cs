@@ -35,7 +35,7 @@ namespace Monopoly.model
         override
         public void describe()
         {
-            Console.WriteLine("Id : " + id + " - description : " + this.getDescription());
+            Form_board.GetInstance.insert_console("Id : " + id + " - description : " + this.getDescription());
         }
     }
 }

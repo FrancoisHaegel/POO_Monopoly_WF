@@ -58,7 +58,7 @@ namespace Monopoly.controller
 
         public void describe()
         {
-            Console.WriteLine("Descirption des Players :");
+            Form_board.GetInstance.insert_console("Descirption des Players :");
             foreach (Player p in players)
             {
                 p.describe();
@@ -73,7 +73,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.giveMoney : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.giveMoney : " + e);
                 return false;
             }
             return true;
@@ -98,32 +98,40 @@ namespace Monopoly.controller
             {
                 player.addProperty(prop);
                 prop.setOwner(player);
-                if (prop.getType() == Property.PropType.RAILROAD)
+                if (prop.getType() == model.Property.PropType.PRIVATE)
                 {
-                    foreach (Property p in player.getproperties())
+                    Form_board.GetInstance.addPropriete(player.getName(), prop.getName(), Color.FromName(((PrivateProperty)prop).getColor()), prop.Tile.getIndex());
+                }
+                else
+                {
+                    if (prop.getType() == Property.PropType.RAILROAD)
                     {
-                        if (p.getType() == prop.getType()  && p != prop)
+                        foreach (Property p in player.getproperties())
                         {
-                            p.upgradeCurrentRent();
-                            prop.upgradeCurrentRent();
+                            if (p.getType() == prop.getType() && p != prop)
+                            {
+                                p.upgradeCurrentRent();
+                                prop.upgradeCurrentRent();
+                            }
                         }
                     }
-                }
-                if (prop.getType() == Property.PropType.UTILITY)
-                {
-                    foreach (Property p in player.getproperties())
+                    if (prop.getType() == Property.PropType.UTILITY)
                     {
-                        if (p.getType() == prop.getType() && p != prop)
+                        foreach (Property p in player.getproperties())
                         {
-                            p.upgradeCurrentRent();
-                            prop.upgradeCurrentRent();
+                            if (p.getType() == prop.getType() && p != prop)
+                            {
+                                p.upgradeCurrentRent();
+                                prop.upgradeCurrentRent();
+                            }
                         }
+                        Form_board.GetInstance.addPropriete(player.getName(), prop.getName(), Color.WhiteSmoke, prop.Tile.getIndex());
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.giveProperty : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.giveProperty : " + e);
                 return false;
             }
             return true;
@@ -160,7 +168,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.takeProperty : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.takeProperty : " + e);
                 return false;
             }
             return true;
@@ -174,7 +182,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.giveMortgagedProperty : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.giveMortgagedProperty : " + e);
                 return false;
             }
             return true;
@@ -188,7 +196,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.takeMortgagedProperty : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.takeMortgagedProperty : " + e);
                 return false;
             }
             return true;
@@ -202,7 +210,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.giveCard : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.giveCard : " + e);
                 return false;
             }
             return true;
@@ -216,7 +224,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.takeCard : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.takeCard : " + e);
                 return false;
             }
             return true;
@@ -230,7 +238,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.sendToJail : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.sendToJail : " + e);
                 return false;
             }
             return true;
@@ -244,7 +252,7 @@ namespace Monopoly.controller
             }
             catch (Exception e)
             {
-                Console.WriteLine("Err - Playermanager.getOutOfJail : " + e);
+                Form_board.GetInstance.insert_console("Err - Playermanager.getOutOfJail : " + e);
                 return false;
             }
             return true;

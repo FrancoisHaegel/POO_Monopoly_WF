@@ -335,14 +335,9 @@ namespace Monopoly.controller
             }
         }
 
-        //Ask the player if he wants to buy an ownerless property
-        public void askForPurchase(Player player, Property property)
+        public void purchase(Player player, Property property, bool purchase)
         {
-            Form_board.GetInstance.insert_console("La propriété de cette case est libre, voulez vous l'acheter pour " + property.getPrice().ToString() + " ?");
-            var confirmResult = MessageBox.Show("Acheter",
-                                     "Ne pas acheter",
-                                     MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
+            if (purchase)
             {
                 try
                 {
@@ -362,9 +357,17 @@ namespace Monopoly.controller
                 }
                 else
                 {
-                    startBid(property);
+                    Form_board.GetInstance.popupEnchere(property.Tile.getIndex());
+                    //startBid(property);
                 }
             }
+        }
+
+        //Ask the player if he wants to buy an ownerless property
+        public void askForPurchase(Player player, Property property)
+        {
+            Form_board.GetInstance.insert_console("La propriété de cette case est libre, voulez vous l'acheter pour " + property.getPrice().ToString() + " ?");
+            Form_board.GetInstance.popupCarte(property.Tile.getIndex(), true);
         }
 
         //Buy a house when the player owns a whole street

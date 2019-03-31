@@ -23,18 +23,18 @@ namespace Monopoly.controller
             }
             catch (DirectoryNotFoundException e)
             {
-                Console.WriteLine("Error : Cannot find path : " + e);
+                Form_board.GetInstance.insert_console("Error : Cannot find path : " + e);
             }
         }
 
         public void describe()
         {
-            Console.WriteLine("Description des Community-Cards :");
+            Form_board.GetInstance.insert_console("Description des Community-Cards :");
             foreach (Card c in communityCards)
             {
                 c.describe();
             }
-            Console.WriteLine("Description des Chance-Cards :");
+            Form_board.GetInstance.insert_console("Description des Chance-Cards :");
             foreach (Card c in chanceCards)
             {
                 c.describe();

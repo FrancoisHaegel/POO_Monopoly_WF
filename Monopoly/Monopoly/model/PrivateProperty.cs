@@ -52,7 +52,7 @@ namespace Monopoly.model
         public void describe()
         {
             string rentToString = string.Join(",", this.getRent());
-            Console.WriteLine(this.getType() + " - " + this.getId().ToString() + " - " + this.getName() + " - " + this.getColor() + " - " + this.getPrice().ToString() + " - " + this.getHouseCost().ToString() + " - " + rentToString + " - housesCount : " + getHousesCount().ToString() + " - currentRent : " + getCurrentRent().ToString());
+            Form_board.GetInstance.insert_console(this.getType() + " - " + this.getId().ToString() + " - " + this.getName() + " - " + this.getColor() + " - " + this.getPrice().ToString() + " - " + this.getHouseCost().ToString() + " - " + rentToString + " - housesCount : " + getHousesCount().ToString() + " - currentRent : " + getCurrentRent().ToString());
         }
     }
 }
