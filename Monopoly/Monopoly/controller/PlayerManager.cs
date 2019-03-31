@@ -98,6 +98,28 @@ namespace Monopoly.controller
             {
                 player.addProperty(prop);
                 prop.setOwner(player);
+                if (prop.getType() == Property.PropType.RAILROAD)
+                {
+                    foreach (Property p in player.getproperties())
+                    {
+                        if (p.getType() == prop.getType()  && p != prop)
+                        {
+                            p.upgradeCurrentRent();
+                            prop.upgradeCurrentRent();
+                        }
+                    }
+                }
+                if (prop.getType() == Property.PropType.UTILITY)
+                {
+                    foreach (Property p in player.getproperties())
+                    {
+                        if (p.getType() == prop.getType() && p != prop)
+                        {
+                            p.upgradeCurrentRent();
+                            prop.upgradeCurrentRent();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -113,6 +135,28 @@ namespace Monopoly.controller
             {
                 player.removeProperty(prop);
                 prop.setOwner(null);
+                if (prop.getType() == Property.PropType.RAILROAD)
+                {
+                    foreach (Property p in player.getproperties())
+                    {
+                        if (p.getType() == Property.PropType.RAILROAD)
+                        {
+                            p.downgradeCurrentRent();
+                            prop.downgradeCurrentRent();
+                        }
+                    }
+                }
+                if (prop.getType() == Property.PropType.UTILITY)
+                {
+                    foreach (Property p in player.getproperties())
+                    {
+                        if (p.getType() == Property.PropType.UTILITY)
+                        {
+                            p.downgradeCurrentRent();
+                            prop.downgradeCurrentRent();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -127,7 +171,6 @@ namespace Monopoly.controller
             try
             {
                 player.addMortgagedProperty(prop);
-                prop.setOwner(player);
             }
             catch (Exception e)
             {
@@ -142,7 +185,6 @@ namespace Monopoly.controller
             try
             {
                 player.removeMortgagedProperty(prop);
-                prop.setOwner(null);
             }
             catch (Exception e)
             {
@@ -246,8 +288,8 @@ namespace Monopoly.controller
             if(property.getHousesCount() == 0)
             {
                 giveMoney(player, property.getPrice() / 2);
-                player.removeProperty(property);
-                player.addMortgagedProperty(property);
+                takeProperty(player, property);
+                giveMortgagedProperty(player, property);
                 property.setMortgaged(true);
             }
             else
@@ -266,8 +308,8 @@ namespace Monopoly.controller
             else
             {
                 takeMoney(player, int.Parse(price.ToString()));
-                player.removeMortgagedProperty(property);
-                player.addProperty(property);
+                takeMortgagedProperty(player, property);
+                giveProperty(player, property);
                 property.setMortgaged(false);
             }
         }
