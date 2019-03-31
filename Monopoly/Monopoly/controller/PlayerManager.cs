@@ -121,6 +121,36 @@ namespace Monopoly.controller
             return true;
         }
 
+        public bool giveMortgagedProperty(Player player, Property prop)
+        {
+            try
+            {
+                player.addMortgagedProperty(prop);
+                prop.setOwner(player);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Err - Playermanager.giveMortgagedProperty : " + e);
+                return false;
+            }
+            return true;
+        }
+
+        public bool takeMortgagedProperty(Player player, Property prop)
+        {
+            try
+            {
+                player.removeMortgagedProperty(prop);
+                prop.setOwner(null);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Err - Playermanager.takeMortgagedProperty : " + e);
+                return false;
+            }
+            return true;
+        }
+
         public bool giveCard(Player player, Card card)
         {
             try
@@ -179,22 +209,50 @@ namespace Monopoly.controller
 
         public Tile moovePlayer(Player player, int distance)
         {
+            int previousTile = player.getLocation().getIndex();
+
             player.setLocation(BoardManager.getTile((player.getLocation().getIndex() + distance) % 40));
+
+            int currentTile = player.getLocation().getIndex();
+
+            if (currentTile < previousTile)
+            {
+                Form_board.GetInstance.insert_console("Vous êtes passé par la case Départ, vous récoltez 200$");
+                giveMoney(player, 200);
+            }
+            
             return player.getLocation();
         }
 
         public Tile moovePlayer(Player player, Tile tile)
         {
+            int previousTile = player.getLocation().getIndex();
+
             player.setLocation(tile);
+
+            int currentTile = player.getLocation().getIndex();
+
+            if (currentTile < previousTile)
+            {
+                Form_board.GetInstance.insert_console("Vous êtes passé par la case Départ, vous récoltez 200$");
+                giveMoney(player, 200);
+            }
             return player.getLocation();
         }
 
         public void mortgage(Player player, Property property)
         {
-            giveMoney(player, property.getPrice() / 2);
-            player.removeProperty(property);
-            player.addMortgagedProperty(property);
-            property.setMortgaged(true);
+            if(property.getHousesCount() == 0)
+            {
+                giveMoney(player, property.getPrice() / 2);
+                player.removeProperty(property);
+                player.addMortgagedProperty(property);
+                property.setMortgaged(true);
+            }
+            else
+            {
+                throw new ImpossibleMortgageException();
+            }
         }
 
         public void unmortgage(Player player, Property property)
@@ -211,6 +269,40 @@ namespace Monopoly.controller
                 player.addProperty(property);
                 property.setMortgaged(false);
             }
+        }
+
+        public void killPlayer(Player killed, Player killer)
+        {
+            if(killer != null)
+            {
+                foreach(Property p in killed.getproperties())
+                {
+                    giveProperty(killer, p);
+                }
+                foreach (Property p in killed.getMortagedProperties())
+                {
+                    giveMortgagedProperty(killer, p);
+                }
+                foreach (Card c in killed.getCards())
+                {
+                    giveCard(killer, c);
+                }
+            }
+            else{
+                foreach (Property p in killed.getproperties())
+                {
+                    takeProperty(killed, p);
+                }
+                foreach (Property p in killed.getMortagedProperties())
+                {
+                    takeMortgagedProperty(killed, p);
+                }
+                foreach (Card c in killed.getCards())
+                {
+                    takeCard(killed, c);
+                }
+            }
+            players.Remove(killed);
         }
     }
 }

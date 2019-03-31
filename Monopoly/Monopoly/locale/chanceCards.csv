@@ -2,9 +2,9 @@
 0;ADVANCE TO GO (COLLECT $200)
 1;ADVANCE TO ILLINOIS AVE.
 2;ADVANCE TO ST. CHARLES PLACE. IF YOU PASS GO, COLLECT $200
-3;ADVANCE TOKEN TO NEAREST UTILITY. If UNOWNED you may buy it from the Bank. If OWNED, throw dice and pay owner a total ten times the amount thrown.
-4;Advance token to the nearest Railroad and pay owner Twice the Rental to which he/she is otherwise entitled. If Railroad is UNOWNED, you may buy it from the Bank.
-5;Advance token to the nearest Railroad and pay owner Twice the Rental to which he/she is otherwise entitled. If Railroad is UNOWNED, you may buy it from the Bank.
+3;ADVANCE TOKEN TO NEAREST UTILITY. If UNOWNED you may buy it from the Bank. If OWNED, pay the rent to the owner.
+4;Advance token to the nearest Railroad and pay the rent to thr owner. If Railroad is UNOWNED, you may buy it from the Bank.
+5;Advance token to the nearest Railroad and pay the rent to the owner. If Railroad is UNOWNED, you may buy it from the Bank.
 6;BANK PAYS YOU DIVIDEND OF $50
 7;THIS CARD MAY BE KEPT UNTIL NEEDED, OR SOLD. GET OUT OF JAIL FREE
 8;GO BACK 3 SPACES
