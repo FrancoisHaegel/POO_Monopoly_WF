@@ -142,7 +142,6 @@ namespace Monopoly.controller
             try
             {
                 player.removeProperty(prop);
-                prop.setOwner(null);
                 if (prop.getType() == Property.PropType.RAILROAD)
                 {
                     foreach (Property p in player.getproperties())
@@ -343,10 +342,12 @@ namespace Monopoly.controller
                 foreach (Property p in killed.getproperties())
                 {
                     takeProperty(killed, p);
+                    p.setOwner(null);
                 }
                 foreach (Property p in killed.getMortagedProperties())
                 {
                     takeMortgagedProperty(killed, p);
+                    p.setOwner(null);
                 }
                 foreach (Card c in killed.getCards())
                 {
