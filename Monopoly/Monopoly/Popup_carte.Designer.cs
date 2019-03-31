@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -46,7 +45,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label18 = new System.Windows.Forms.Label();
             this.button_achat_maison = new System.Windows.Forms.Button();
@@ -118,17 +116,6 @@
             this.label3.Size = new System.Drawing.Size(99, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Loyer terrain nu";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(26, 200);
-            this.label4.Margin = new System.Windows.Forms.Padding(3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(143, 16);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Loyer avec toute la rue";
             // 
             // label5
             // 
@@ -260,17 +247,6 @@
             this.label16.TabIndex = 17;
             this.label16.Text = "label16";
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(301, 200);
-            this.label17.Margin = new System.Windows.Forms.Padding(3);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(52, 16);
-            this.label17.TabIndex = 18;
-            this.label17.Text = "label17";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
@@ -305,6 +281,7 @@
             this.button_achat_maison.TabIndex = 22;
             this.button_achat_maison.Text = "Acheter une maison: -$100";
             this.button_achat_maison.UseVisualStyleBackColor = false;
+            this.button_achat_maison.Click += new System.EventHandler(this.button_achat_maison_Click);
             // 
             // pictureBox_color
             // 
@@ -328,6 +305,7 @@
             this.button_vente_maison.Text = "Vendre une maison: +$50";
             this.button_vente_maison.UseVisualStyleBackColor = false;
             this.button_vente_maison.Visible = false;
+            this.button_vente_maison.Click += new System.EventHandler(this.button_vente_maison_Click);
             // 
             // button_acheter
             // 
@@ -366,11 +344,9 @@
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(386, 501);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.button_acheter);
             this.Controls.Add(this.button_vente_maison);
             this.Controls.Add(this.button_achat_maison);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
@@ -383,16 +359,17 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button_hypotheque);
             this.Controls.Add(this.button_close);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox_color);
+            this.Controls.Add(this.button_acheter);
+            this.Controls.Add(this.button_hypotheque);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Popup_carte";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Popup_carte";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -409,7 +386,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -422,7 +398,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button button_achat_maison;

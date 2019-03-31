@@ -94,11 +94,13 @@ namespace Monopoly.model
         public void upgradeCurrentRent()
         {
             housesCount++;
+            Form_board.GetInstance.setRent(this, this.getCurrentRent());
         }
 
         public void downgradeCurrentRent()
         {
             housesCount--;
+            Form_board.GetInstance.setRent(this, this.getCurrentRent());
         }
 
         public abstract void describe();

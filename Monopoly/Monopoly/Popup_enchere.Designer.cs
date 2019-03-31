@@ -113,6 +113,7 @@
             this.Controls.Add(this.button_encherir);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Popup_enchere";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Popup_enchere";
             this.ResumeLayout(false);

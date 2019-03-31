@@ -70,6 +70,7 @@
             this.Controls.Add(this.pictureBox_dice_A);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Popup_dices";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Popup_dices";
             this.Load += new System.EventHandler(this.Popup_dices_Load);

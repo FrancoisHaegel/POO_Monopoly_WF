@@ -331,6 +331,7 @@
             this.Controls.Add(this.comboBox_nb_joueur);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Popup_game_param";
             this.Text = "Popup_game_param";
             this.Load += new System.EventHandler(this.Popup_game_param_Load);

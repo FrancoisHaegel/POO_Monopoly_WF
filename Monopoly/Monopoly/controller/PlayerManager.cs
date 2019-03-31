@@ -70,6 +70,7 @@ namespace Monopoly.controller
             try
             {
                 p.setMoney(p.getMoney() + amount);
+                Form_board.GetInstance.setThunes(p.getName(), p.getMoney());
             }
             catch (Exception e)
             {
@@ -84,6 +85,7 @@ namespace Monopoly.controller
             if (player.getMoney() >= amount)
             {
                 player.setMoney(player.getMoney() - amount);
+                Form_board.GetInstance.setThunes(player.getName(), player.getMoney());
             }
             else
             {
@@ -98,9 +100,10 @@ namespace Monopoly.controller
             {
                 player.addProperty(prop);
                 prop.setOwner(player);
+                Form_board.GetInstance.setRent(prop, prop.getCurrentRent());
                 if (prop.getType() == model.Property.PropType.PRIVATE)
                 {
-                    Form_board.GetInstance.addPropriete(player.getName(), prop.getName(), Color.FromName(((PrivateProperty)prop).getColor()), prop.Tile.getIndex());
+                    Form_board.GetInstance.addPropriete(player.getName(), prop, Color.FromName(((PrivateProperty)prop).getColor()), prop.Tile.getIndex());
                 }
                 else
                 {
@@ -114,6 +117,7 @@ namespace Monopoly.controller
                                 prop.upgradeCurrentRent();
                             }
                         }
+                        Form_board.GetInstance.addPropriete(player.getName(), prop, Color.WhiteSmoke, prop.Tile.getIndex());
                     }
                     if (prop.getType() == Property.PropType.UTILITY)
                     {
@@ -125,7 +129,7 @@ namespace Monopoly.controller
                                 prop.upgradeCurrentRent();
                             }
                         }
-                        Form_board.GetInstance.addPropriete(player.getName(), prop.getName(), Color.WhiteSmoke, prop.Tile.getIndex());
+                        Form_board.GetInstance.addPropriete(player.getName(), prop, Color.WhiteSmoke, prop.Tile.getIndex());
                     }
                 }
             }
@@ -270,7 +274,9 @@ namespace Monopoly.controller
                 Form_board.GetInstance.insert_console("Vous êtes passé par la case Départ, vous récoltez 200$");
                 giveMoney(player, 200);
             }
-            
+
+            Form_board.GetInstance.setJetonIndex(player.Color, currentTile);
+
             return player.getLocation();
         }
 
@@ -287,6 +293,9 @@ namespace Monopoly.controller
                 Form_board.GetInstance.insert_console("Vous êtes passé par la case Départ, vous récoltez 200$");
                 giveMoney(player, 200);
             }
+
+            Form_board.GetInstance.setJetonIndex(player.Color, currentTile);
+
             return player.getLocation();
         }
 
