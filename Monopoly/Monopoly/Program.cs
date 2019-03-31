@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Monopoly.controller;
 
 namespace Monopoly
 {
@@ -16,6 +17,7 @@ namespace Monopoly
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            GameManager gameManager = new GameManager();
             Application.Run(Form_board.GetInstance);
         }
     }

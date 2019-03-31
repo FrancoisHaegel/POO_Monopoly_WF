@@ -27,6 +27,14 @@ namespace Monopoly
             this.pictureBox_dice_B.BackgroundImage = dice_B;
         }
 
+        public Popup_dices(Image dice_A)
+        {
+            InitializeComponent();
+            BackColor = Color.Lime;
+            TransparencyKey = Color.Lime;
+            this.pictureBox_dice_A.BackgroundImage = dice_A;
+        }
+
         private void timer_fade_Tick(object sender, EventArgs e)
         {
             if(this.Opacity > 0.0)

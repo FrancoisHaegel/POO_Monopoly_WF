@@ -87,6 +87,27 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="controller\GameManager.cs" />
+    <Compile Include="controller\PlayerManager.cs" />
+    <Compile Include="controller\CardManager.cs" />
+    <Compile Include="controller\BoardManager.cs" />
+    <Compile Include="controller\PropertyManager.cs" />
+    <Compile Include="exception\NotEnoughMoneyException.cs" />
+    <Compile Include="exception\ImpossibleMortgageException.cs" />
+    <None Include="locale\chanceCards.csv" />
+    <None Include="locale\communityCards.csv" />
+    <None Include="locale\privateProperties.csv" />
+    <None Include="locale\railroads.csv" />
+    <None Include="locale\utilities.csv" />
+    <Compile Include="model\Card.cs" />
+    <Compile Include="model\CardChance.cs" />
+    <Compile Include="model\CardCommunity.cs" />
+    <Compile Include="model\Player.cs" />
+    <Compile Include="model\PrivateProperty.cs" />
+    <Compile Include="model\Property.cs" />
+    <Compile Include="model\RailRoads.cs" />
+    <Compile Include="model\Tile.cs" />
+    <Compile Include="model\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -110,6 +131,12 @@
     <None Include="Resources\dice_6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="model\" />
+    <Folder Include="controller\" />
+    <Folder Include="locale\" />
+    <Folder Include="exception\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
