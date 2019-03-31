@@ -545,7 +545,7 @@ namespace Monopoly.controller
 
         public void askMortgage(Player player, Property property)
         {
-            if(property.getHousesCount() == 0)
+            if(property.getHousesCount() == 0 || property.getType() == Property.PropType.RAILROAD || property.getType() == Property.PropType.UTILITY)
             {
                 playerManager.mortgage(player, property);
                 Form_board.GetInstance.insert_console("Votre nouveau solde est de : " + player.getMoney().ToString() + "$");
