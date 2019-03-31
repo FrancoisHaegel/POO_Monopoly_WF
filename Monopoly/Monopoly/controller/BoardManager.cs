@@ -83,7 +83,7 @@ namespace Monopoly.controller
 
         public void describe()
         {
-            Console.WriteLine("Description du plateau : ");
+            Form_board.GetInstance.insert_console("Description du plateau : ");
             foreach (Tile t in board)
             {
                 t.describe();

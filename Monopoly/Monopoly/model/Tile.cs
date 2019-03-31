@@ -82,9 +82,9 @@ namespace Monopoly.model
         public void describe()
         {
             if (type == TileType.PRIVATE_PROPERTY || type == TileType.PUBLIC_COMPANY || type == TileType.RAILROADS)
-                Console.WriteLine("Id : " + index + " - type : " + type + " - property : " + property.getName());
+                Form_board.GetInstance.insert_console("Id : " + index + " - type : " + type + " - property : " + property.getName());
             else
-                Console.WriteLine("Id : " + index + " - type : " + type);
+                Form_board.GetInstance.insert_console("Id : " + index + " - type : " + type);
         }
     }
 }
