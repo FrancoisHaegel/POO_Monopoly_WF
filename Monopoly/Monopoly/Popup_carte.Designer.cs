@@ -52,6 +52,8 @@
             this.button_achat_maison = new System.Windows.Forms.Button();
             this.pictureBox_color = new System.Windows.Forms.PictureBox();
             this.button_vente_maison = new System.Windows.Forms.Button();
+            this.button_acheter = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_color)).BeginInit();
             this.SuspendLayout();
@@ -327,12 +329,44 @@
             this.button_vente_maison.UseVisualStyleBackColor = false;
             this.button_vente_maison.Visible = false;
             // 
+            // button_acheter
+            // 
+            this.button_acheter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_acheter.BackColor = System.Drawing.Color.White;
+            this.button_acheter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_acheter.Location = new System.Drawing.Point(12, 437);
+            this.button_acheter.Name = "button_acheter";
+            this.button_acheter.Size = new System.Drawing.Size(362, 23);
+            this.button_acheter.TabIndex = 25;
+            this.button_acheter.Text = "ACHETER";
+            this.button_acheter.UseVisualStyleBackColor = false;
+            this.button_acheter.Visible = false;
+            this.button_acheter.Click += new System.EventHandler(this.button_acheter_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(12, 466);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(362, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "NE PAS ACHETER";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Popup_carte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Info;
             this.ClientSize = new System.Drawing.Size(386, 501);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_acheter);
             this.Controls.Add(this.button_vente_maison);
             this.Controls.Add(this.button_achat_maison);
             this.Controls.Add(this.label18);
@@ -394,5 +428,7 @@
         private System.Windows.Forms.Button button_achat_maison;
         private System.Windows.Forms.PictureBox pictureBox_color;
         private System.Windows.Forms.Button button_vente_maison;
+        private System.Windows.Forms.Button button_acheter;
+        private System.Windows.Forms.Button button1;
     }
 }

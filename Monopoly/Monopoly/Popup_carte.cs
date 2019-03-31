@@ -31,7 +31,7 @@ namespace Monopoly
         }
 
         // Constructeur de carte propriété
-        public Popup_carte(string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7, int prix_8)
+        public Popup_carte(string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7, int prix_8, bool achat)
         {
             InitializeComponent();
             label1.Text = titre;
@@ -58,6 +58,12 @@ namespace Monopoly
             }
             else
             {
+                if (achat)
+                {
+                    button1.Visible = true;
+                    button_close.Visible = false;
+                    button_acheter.Visible = true;
+                }
                 button_achat_maison.Visible = false;
                 button_hypotheque.Visible = false;
                 this.Height -= 60;
@@ -65,7 +71,7 @@ namespace Monopoly
         }
 
         // Constructeur de carte gare
-        public Popup_carte(string titre, string nom, bool owned, String currency, int prix_1, int prix_2, int prix_3, int prix_4, Image logo)
+        public Popup_carte(string titre, string nom, bool owned, String currency, int prix_1, int prix_2, int prix_3, int prix_4, Image logo, bool achat)
         {
             InitializeComponent();
 
@@ -95,6 +101,12 @@ namespace Monopoly
 
             if (!owned)
             {
+                if (achat)
+                {
+                    button_acheter.Visible = true;
+                    button1.Visible = true;
+                    button_close.Visible = false;
+                }
                 button_hypotheque.Visible = false;
                 this.Height -= 40;
             }
@@ -108,7 +120,7 @@ namespace Monopoly
         }
 
         // Constructeur de carte entreprise
-        public Popup_carte(string titre, string nom, bool owned, Image logo)
+        public Popup_carte(string titre, string nom, bool owned, Image logo, bool achat)
         {
             InitializeComponent();
 
@@ -137,6 +149,12 @@ namespace Monopoly
 
             if (!owned)
             {
+                if (achat)
+                {
+                    button_acheter.Visible = true;
+                    button1.Visible = true;
+                    button_close.Visible = false;
+                }
                 button_hypotheque.Visible = false;
                 this.Height -= 35;
             }
@@ -157,6 +175,18 @@ namespace Monopoly
 
         private void button_hypotheque_Click(object sender, EventArgs e)
         {
+        }
+
+        private void button_acheter_Click(object sender, EventArgs e)
+        {
+            controller.GameManager.GetInstance.purchase(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), controller.GameManager.GetInstance.playerManager.getCurrentPlayer().getLocation().getProperty(), true);
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            controller.GameManager.GetInstance.purchase(controller.GameManager.GetInstance.playerManager.getCurrentPlayer(), controller.GameManager.GetInstance.playerManager.getCurrentPlayer().getLocation().getProperty(), false);
+            this.Close();
         }
     }
 }

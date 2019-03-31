@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Monopoly.model
 {
-    class Tile
+    public class Tile
     {
         private int index;
         private Property property;
@@ -44,6 +44,8 @@ namespace Monopoly.model
         {
             index = pId;
             property = pProperty;
+            if(property != null)
+                property.Tile = this;
             switch (pType)
             {
                 case 0:

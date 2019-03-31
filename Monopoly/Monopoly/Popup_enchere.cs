@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Monopoly.model;
 
 namespace Monopoly
 {
     public partial class Popup_enchere : Form
     {
-        private List<Tuple<String, int>> offres = new List < Tuple<String, int> >();
-        private List<String> joueurs;
+        private List<Tuple<Player, int>> offres = new List < Tuple<Player, int> >();
+        private List<Player> joueurs;
         private int indexEnchere = 0;
-        Popup_carte popupCarte;
-        public Popup_enchere(List<String> j, Popup_carte carte)
+        private Popup_carte popupCarte;
+
+        public Popup_enchere(List<Player> j, Popup_carte carte)
         {
             carte.Show(this);
             InitializeComponent();
@@ -26,7 +28,9 @@ namespace Monopoly
             this.Location = new Point(carte.Location.X + carte.Width, carte.Location.Y);
 
             popupCarte = carte;
+
             joueurs = j;
+
             nextIndex();
         }
 
@@ -37,8 +41,8 @@ namespace Monopoly
             if(indexEnchere + 1 > joueurs.Count)
             {
                 int max = 0;
-                String winner = offres[0].Item1; 
-                foreach (Tuple<String, int> entry in offres)
+                Player winner = offres[0].Item1; 
+                foreach (Tuple<Player, int> entry in offres)
                 {
                     if(entry.Item2 > max)
                     {
@@ -46,13 +50,14 @@ namespace Monopoly
                         winner = entry.Item1;
                     }
                 }
-                MessageBox.Show(winner + " remporte l'enchère pour $ " + max.ToString());
+                MessageBox.Show(winner.getName() + " remporte l'enchère pour $ " + max.ToString());
+                controller.GameManager.GetInstance.playerManager.giveProperty(winner, controller.GameManager.GetInstance.playerManager.getCurrentPlayer().getLocation().getProperty());
                 this.Close();
                 popupCarte.Close();
             }
             else
             {
-                this.label_joueur.Text = joueurs[indexEnchere++];
+                this.label_joueur.Text = joueurs[indexEnchere++].getName();
             }
         }
 
@@ -61,6 +66,7 @@ namespace Monopoly
             int offre = 0;
             Int32.TryParse(this.textBox_offre.Text, out offre);
             offres.Add(Tuple.Create(joueurs[indexEnchere-1], offre));
+            this.textBox_offre.Text = "";
             nextIndex();
         }
 

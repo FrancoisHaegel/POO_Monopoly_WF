@@ -66,6 +66,7 @@
             // 
             // comboBox_nb_joueur
             // 
+            this.comboBox_nb_joueur.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_nb_joueur.FormattingEnabled = true;
             this.comboBox_nb_joueur.Items.AddRange(new object[] {
             "2",

@@ -71,16 +71,11 @@ namespace Monopoly
 
         Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
         {
-            {"Francois", Tuple.Create(Color.DarkOrange, 100000)},
-            {"Bruno", Tuple.Create(Color.MediumTurquoise, 200)},
         };
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
         Dictionary<String, List<Tuple<String, Color, int, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int, int>>>()
         {
-            {"Francois", new List<Tuple<String, Color, int, int, int>>{  } },
-            {"Bruno", new List<Tuple<String, Color, int, int, int>>{ Tuple.Create("Hautepierre", Color.Red, 0, 60, 5), Tuple.Create("Neuhof", Color.Red, 1, 48, 1) } },
-
         };
         // Affiche les images des des correspondants au entier donne
         public void showDices(int dice_A, int dice_B)
@@ -434,7 +429,7 @@ namespace Monopoly
 
 
         // Affiche le popup de la carte
-        private void popupCarte(int index)
+        public void popupCarte(int index, bool purchase)
         {
             model.Property ppt = GameManager.GetInstance.boardManager.getBoard()[index].getProperty();
 
@@ -444,64 +439,67 @@ namespace Monopoly
             switch (ppt.getType())
             {
                 case model.Property.PropType.PRIVATE:
-                    popup = new Popup_carte("PROPRIETE", ppt.getName(), owned,Color.FromName( ((model.PrivateProperty)ppt).getColor() ), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice()/2);
+                    popup = new Popup_carte("PROPRIETE", ppt.getName(), owned,Color.FromName( ((model.PrivateProperty)ppt).getColor() ), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice()/2, purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
                 case model.Property.PropType.RAILROAD:
-                    popup = new Popup_carte("GARE", ppt.getName(), owned, Color.FromName(((model.PrivateProperty)ppt).getColor()), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], new Bitmap(".\\Resources\\train.png"));
+                    popup = new Popup_carte("GARE", ppt.getName(), owned, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
                 case model.Property.PropType.UTILITY:
+                    Bitmap btmp;
+                    if(index == 12)
+                    {
+                        btmp = new Bitmap(".\\Resources\\electric.png");
+                    }
+                    else
+                    {
+                        btmp = new Bitmap(".\\Resources\\water.png");
+                    }
+                    popup = new Popup_carte("ENTREPRISE", ppt.getName(), owned, btmp, purchase);
                     popup.ShowDialog(this);
                     popup.Dispose();
                     break;
+            }            
+        }
+
+        public void popupEnchere(int index)
+        {
+            model.Property ppt = GameManager.GetInstance.boardManager.getBoard()[index].getProperty();
+
+            Popup_carte popup = null;
+            switch (ppt.getType())
+            {
+                case model.Property.PropType.PRIVATE:
+                    popup = new Popup_carte("PROPRIETE", ppt.getName(), false, Color.FromName(((model.PrivateProperty)ppt).getColor()), CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], ppt.getRent()[4], ppt.getRent()[5], ((model.PrivateProperty)ppt).getHouseCost(), ppt.getPrice() / 2, true);
+                    break;
+                case model.Property.PropType.RAILROAD:
+                    popup = new Popup_carte("GARE", ppt.getName(), false, CURRENCY, ppt.getRent()[0], ppt.getRent()[1], ppt.getRent()[2], ppt.getRent()[3], new Bitmap(".\\Resources\\train.png"), true);
+                    break;
+                case model.Property.PropType.UTILITY:
+                    Bitmap btmp;
+                    if (index == 12)
+                    {
+                        btmp = new Bitmap(".\\Resources\\electric.png");
+                    }
+                    else
+                    {
+                        btmp = new Bitmap(".\\Resources\\water.png");
+                    }
+                    popup = new Popup_carte("ENTREPRISE", ppt.getName(), false, btmp, true);
+                    break;
             }
-
-
-            /*
-            Popup_carte popup = new Popup_carte("ENTREPRISE", nom, true, new Bitmap(".\\Resources\\water.png"));
-            Popup_enchere enchere = new Popup_enchere(new List<String> { "Nathan", "Francis", "Bruno" }, popup);
+            Popup_enchere enchere = new Popup_enchere(controller.GameManager.GetInstance.playerManager.getPlayers(), popup);
             enchere.ShowDialog(this);
             popup.Dispose();
             enchere.Dispose();
-            */
 
-            /*
-            popup = new Popup_carte("ENTREPRISE", nom, false, new Bitmap(".\\Resources\\water.png"));
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("ENTREPRISE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("GARE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("PROPRIETE", nom,false, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("ENTREPRISE", nom,true, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\electric.png"));
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("GARE", nom,false, "$", 25, 50, 100, 200, new Bitmap(".\\Resources\\train.png"));
-            popup.ShowDialog(this);
-            popup.Dispose();
-
-            popup = new Popup_carte("PROPRIETE", nom,true, Color.Orange, "$", 25, 50, 100, 200, 300, 400, 100, 75);
-            popup.ShowDialog(this);
-            popup.Dispose();
-            */
         }
 
-
-        // Click sur une propriete dans le panel joueur
-        private void drawPanel_player_MouseClick(object sender, MouseEventArgs e)
+            // Click sur une propriete dans le panel joueur
+            private void drawPanel_player_MouseClick(object sender, MouseEventArgs e)
         {
             if (mouseIsOnProperty(e))
             {
@@ -522,7 +520,7 @@ namespace Monopoly
                     {
                         i++;
                         if (i == index)
-                            popupCarte(c.Item5);
+                            popupCarte(c.Item5, false);
                     }
                 }
             }
