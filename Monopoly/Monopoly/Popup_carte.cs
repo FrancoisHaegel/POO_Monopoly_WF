@@ -31,7 +31,7 @@ namespace Monopoly
         }
 
         // Constructeur de carte propriété
-        public Popup_carte(string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7)
+        public Popup_carte(string titre, string nom, bool owned, Color color, String currency, int prix_1, int prix_2, int prix_3, int prix_4, int prix_5, int prix_6, int prix_7, int prix_8)
         {
             InitializeComponent();
             label1.Text = titre;
@@ -48,10 +48,13 @@ namespace Monopoly
             label17.Text = currency + (prix_1 * 2).ToString(); 
             label18.Text = currency + prix_1.ToString();
 
+
             if (owned)
             {
                 button_achat_maison.Text = "Acheter une maison: -" + currency + prix_7.ToString();
-                button_hypotheque.Text = "Hypotéquer: +" + currency + (prix_7 / 2).ToString();
+                button_hypotheque.Text = "Hypotéquer: +" + currency + prix_8.ToString();
+                button_vente_maison.Visible = true;
+                button_vente_maison.Text = "Vendre une maison: +" + currency + (prix_7 / 2).ToString();
             }
             else
             {
