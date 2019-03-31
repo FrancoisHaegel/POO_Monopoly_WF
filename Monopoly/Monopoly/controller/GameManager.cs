@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Monopoly.model;
 using Monopoly.exception;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Monopoly.controller
 {
@@ -338,8 +339,10 @@ namespace Monopoly.controller
         public void askForPurchase(Player player, Property property)
         {
             Form_board.GetInstance.insert_console("La propriété de cette case est libre, voulez vous l'acheter pour " + property.getPrice().ToString() + " ?");
-            string answer = Console.ReadLine();
-            if (answer == "oui")
+            var confirmResult = MessageBox.Show("Acheter",
+                                     "Ne pas acheter",
+                                     MessageBoxButtons.YesNo);
+            if (confirmResult == DialogResult.Yes)
             {
                 try
                 {
