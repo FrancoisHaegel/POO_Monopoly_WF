@@ -136,12 +136,16 @@ namespace Monopoly
         public void addPropriete(String joueur, model.Property nomPropriete, Color couleur, int index)
         {
             int i = 0;
+            bool add = true;
             foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
+                if (p.Item1 == nomPropriete.getName())
+                    add = false;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, 0, index));
+            if (add)
+                proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, 0, index));
             index_proprietes[nomPropriete.getName()] = index;
             rent_proprietes[nomPropriete] = 100;
             drawPanel_player.Refresh();
@@ -150,12 +154,16 @@ namespace Monopoly
         public void addPropriete(String joueur, model.Property nomPropriete, Color couleur, int index, int loyer)
         {
             int i = 0;
+            bool add = true;
             foreach (Tuple<String, Color, int, int, int> p in proprietes[joueur])
             {
                 if (index_proprietes[p.Item1] < index)
                     i++;
+                if (p.Item1 == nomPropriete.getName())
+                    add = false;
             }
-            proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, loyer, index));
+            if (add)
+                proprietes[joueur].Insert(i, Tuple.Create(nomPropriete.getName(), couleur, 0, loyer, index));
             index_proprietes[nomPropriete.getName()] = index;
             rent_proprietes[nomPropriete] = loyer;
             drawPanel_player.Refresh();
