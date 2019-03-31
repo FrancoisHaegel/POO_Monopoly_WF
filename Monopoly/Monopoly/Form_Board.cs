@@ -22,8 +22,16 @@ namespace Monopoly
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
-            //Popup_game_param.GetInstance.ShowDialog(this);
-            //Popup_game_param.GetInstance.Dispose();
+            Popup_game_param.GetInstance.ShowDialog(this);
+            Popup_game_param.GetInstance.Dispose();
+        }
+
+        private void Form_board_Load(object sender, EventArgs e)
+        {
+            foreach (model.Player player in GameManager.GetInstance.playerManager.getPlayers())
+            {
+                addJoueur(player.getName(), player.Color);
+            }
         }
 
         public static Form_board GetInstance
@@ -52,29 +60,14 @@ namespace Monopoly
             {Color.Gold, new int[] { 0, 0, 20 } },
             {Color.RoyalBlue, new int[] { 0, 0, 20 } },
             {Color.LightPink, new int[] { 0, 0, 20 } },
+            {Color.Black, new int[] { 0, 0, 20 } },
         };
 
-        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>()
-        {
-            {"Francois", Tuple.Create(Color.DarkOrange, 100000)},
-            {"Bruno", Tuple.Create(Color.MediumTurquoise, 200)},
-            {"Nathan", Tuple.Create(Color.MediumSeaGreen, 0)},
-            {"Ching", Tuple.Create(Color.Gold, 0)},
-            {"Chang", Tuple.Create(Color.RoyalBlue, 0)},
-            {"Chong", Tuple.Create(Color.LightPink, 0)},
-        };
+        Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>();
 
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
-        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>()
-        {
-            {"Francois", new List<Tuple<String, Color, int, int>>{  } },
-            {"Bruno", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Hautepierre", Color.Red, 0, 60), Tuple.Create("Neuhof", Color.Red, 1, 48) } },
-            {"Nathan", new List<Tuple<String, Color, int, int>>{ Tuple.Create("Gare", Color.Blue, 4, 56), Tuple.Create("Meinau", Color.Blue, 5 , 24) } },
-            {"Ching", new List<Tuple<String, Color, int, int>>{} },
-            {"Chang", new List<Tuple<String, Color, int, int>>{} },
-            {"Chong", new List<Tuple<String, Color, int, int>>{}},
-        };
+        Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>();
 
 
         private void init_test()
@@ -525,5 +518,7 @@ namespace Monopoly
         {
 
         }
+
+
     }
 }

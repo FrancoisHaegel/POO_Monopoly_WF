@@ -32,11 +32,11 @@
             this.button_menu = new System.Windows.Forms.Button();
             this.drawPanel_player = new Monopoly.DrawPanel();
             this.panel_control = new Monopoly.DrawPanel();
+            this.button_roll_dice = new System.Windows.Forms.Button();
             this.button_out_of_jail = new System.Windows.Forms.Button();
             this.textBox_commande = new System.Windows.Forms.TextBox();
             this.button_trade = new System.Windows.Forms.Button();
             this.button_end_turn = new System.Windows.Forms.Button();
-            this.button_roll_dice = new System.Windows.Forms.Button();
             this.listBox_console = new System.Windows.Forms.ListBox();
             this.drawPanel_plateau = new Monopoly.DrawPanel();
             this.panel_control.SuspendLayout();
@@ -90,6 +90,20 @@
             this.panel_control.Size = new System.Drawing.Size(159, 418);
             this.panel_control.TabIndex = 8;
             // 
+            // button_roll_dice
+            // 
+            this.button_roll_dice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_roll_dice.BackColor = System.Drawing.SystemColors.Control;
+            this.button_roll_dice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_roll_dice.Location = new System.Drawing.Point(3, 366);
+            this.button_roll_dice.Name = "button_roll_dice";
+            this.button_roll_dice.Size = new System.Drawing.Size(148, 23);
+            this.button_roll_dice.TabIndex = 1;
+            this.button_roll_dice.Text = "JETER LES DES";
+            this.button_roll_dice.UseVisualStyleBackColor = false;
+            this.button_roll_dice.Click += new System.EventHandler(this.button_roll_dice_Click);
+            // 
             // button_out_of_jail
             // 
             this.button_out_of_jail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -114,7 +128,7 @@
             this.textBox_commande.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
             this.textBox_commande.MinimumSize = new System.Drawing.Size(0, 20);
             this.textBox_commande.Name = "textBox_commande";
-            this.textBox_commande.Size = new System.Drawing.Size(148, 20);
+            this.textBox_commande.Size = new System.Drawing.Size(148, 14);
             this.textBox_commande.TabIndex = 7;
             this.textBox_commande.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_commande_KeyPress);
             // 
@@ -145,20 +159,6 @@
             this.button_end_turn.Text = "FIN DU TOUR";
             this.button_end_turn.UseVisualStyleBackColor = false;
             this.button_end_turn.Click += new System.EventHandler(this.button_end_turn_Click);
-            // 
-            // button_roll_dice
-            // 
-            this.button_roll_dice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_roll_dice.BackColor = System.Drawing.SystemColors.Control;
-            this.button_roll_dice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_roll_dice.Location = new System.Drawing.Point(3, 366);
-            this.button_roll_dice.Name = "button_roll_dice";
-            this.button_roll_dice.Size = new System.Drawing.Size(148, 23);
-            this.button_roll_dice.TabIndex = 1;
-            this.button_roll_dice.Text = "JETER LES DES";
-            this.button_roll_dice.UseVisualStyleBackColor = false;
-            this.button_roll_dice.Click += new System.EventHandler(this.button_roll_dice_Click);
             // 
             // listBox_console
             // 
@@ -200,6 +200,7 @@
             this.Name = "Form_board";
             this.Text = "MONOPOLY";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Form_board_Load);
             this.Resize += new System.EventHandler(this.Form_main_Resize);
             this.panel_control.ResumeLayout(false);
             this.panel_control.PerformLayout();

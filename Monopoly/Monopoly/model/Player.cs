@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Monopoly.model
     {
         private int id;
         private string name;
-        private string color;
+        private Color color;
         private int money;
         private bool inJail;
         public int turnInJail;
@@ -18,6 +19,14 @@ namespace Monopoly.model
         private List<Property> mortgagedProperties;
         private List<Card> cards;
         private Tile location;
+
+        public Color Color
+        {
+            get
+            {
+                return color;
+            }
+        }
 
         public int getId()
         {
@@ -104,7 +113,7 @@ namespace Monopoly.model
             location = tile;
         }
 
-        public Player(int pId, string pName, string pColor, Tile pTile)
+        public Player(int pId, string pName, Color pColor, Tile pTile)
         {
             id = pId;
             name = pName;
