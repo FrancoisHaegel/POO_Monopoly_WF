@@ -34,6 +34,7 @@ namespace Monopoly
                 jetons[player.Color] = reserveJetons[player.Color];
                 setJetonIndex(player.Color, 0);
             }
+            GameManager.GetInstance.startGame();
         }
 
         public static Form_board GetInstance

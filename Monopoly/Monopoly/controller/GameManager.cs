@@ -70,52 +70,38 @@ namespace Monopoly.controller
 
         public void NextTurn()
         {
-            Form_board.GetInstance.insert_console("C'est au tour de " + playerManager.getCurrentPlayer().getName());
-            Form_board.GetInstance.insert_console("Solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney());
-            Form_board.GetInstance.insert_console("Faire un choix d'action");
+            if(playerManager.getPlayers().Count() > 1)
+            {
+                playerManager.setCurrentPlayer(playerManager.getPlayers()[(playerManager.getCurrentPlayer().getId() + 1) % playerManager.getPlayers().Count()]);
+                Form_board.GetInstance.insert_console("C'est au tour de " + playerManager.getCurrentPlayer().getName());
+                Form_board.GetInstance.insert_console("Solde du porte-monnaie : " + playerManager.getCurrentPlayer().getMoney());
+                Form_board.GetInstance.insert_console("Faire un choix d'action");
 
-            dicesRolled = false;
-            currentPlayerRerollsCount = 0;
-            playerManager.setCurrentPlayer(playerManager.getPlayers()[(playerManager.getCurrentPlayer().getId() + 1) % playerManager.getPlayers().Count()]);
+                dicesRolled = false;
+                currentPlayerRerollsCount = 0;
+            }
+            else
+            {
+                endGame();
+            }
+            
         }
 
         public void startGame()
         {
+            boardManager.describe();
+
             Form_board.GetInstance.insert_console("Il y a " + playerManager.getPlayers().Count().ToString() + " joueurs dans la partie");
 
             playerManager.setCurrentPlayer(playerManager.getPlayers()[0]);
 
-            playerManager.giveProperty(playerManager.getCurrentPlayer(), propertyManager.getPrivateProperties()[2]);
-            playerManager.giveProperty(playerManager.getCurrentPlayer(), propertyManager.getPrivateProperties()[3]);
-            playerManager.giveProperty(playerManager.getCurrentPlayer(), propertyManager.getPrivateProperties()[4]);
+            NextTurn();
+        }
 
-            playerManager.getCurrentPlayer().describe();
-
-            while (!isOver())
-            {
-                NextTurn();
-            }
-
+        public void endGame()
+        {
             Form_board.GetInstance.insert_console("Fin de la partie");
             Form_board.GetInstance.insert_console("Le gagnant est " + playerManager.getPlayers()[0].getName() + " !");
-
-            Console.ReadLine();
-        }
-
-        public int getInput()
-        {
-            int x = 0;
-            int.TryParse(Console.ReadLine(), out x);
-            return x;
-        }
-
-        public static int[] rollDices()
-        {
-            int dice1 = random.Next(1, 6);
-            int dice2 = random.Next(1, 6);
-
-            int[] res = { dice1, dice2 };
-            return res;
         }
 
         public void clickRollDices()
@@ -125,20 +111,76 @@ namespace Monopoly.controller
             {
                 int[] dices = rollDices();
                 Form_board.GetInstance.showDices(dices[0], dices[1]);
-                Form_board.GetInstance.insert_console("Vous avez fait un " + dices[0].ToString() + " et un " + dices[1].ToString());
-                /*if (playerManager.getCurrentPlayer().getJailState())
+                Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " fait un " + dices[0].ToString() + " et un " + dices[1].ToString());
+                if (playerManager.getCurrentPlayer().getJailState())
                 {
                     jailedPlayerRollDice(dices);
                 }
                 else
                 {
                     freePlayerRollDice(dices, false);
-                }*/
+                }
             }
             else
             {
                 Form_board.GetInstance.insert_console("Vous avez déjà lancé les dés ce tour");
             }
+        }
+
+        public void clickEndTurn()
+        {
+            if (dicesRolled)
+                NextTurn();
+            else
+                Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
+        }
+
+        public void clickMortgage(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            askMortgage(p.getOwner(), p);
+        }
+
+        public void clickUnMortgage(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            askUnMortgage(p.getOwner(), p);
+        }
+
+        public void clickBuyHouse(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            buyHouse(p.getOwner(), (PrivateProperty)p);
+        }
+
+        public void clickSellHouse(int index)
+        {
+            Property p = boardManager.getBoard()[index].getProperty();
+            sellHouse(p.getOwner(), (PrivateProperty)p);
+        }
+
+        public void clickGetOutOfJail()
+        {
+            if(playerManager.getCurrentPlayer().getCards().Count() == 0)
+            {
+                Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " paye 50$ pour sortir de prison");
+                payTax(playerManager.getCurrentPlayer(), 50);
+            }
+            else
+            {
+                Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " utilise sa carte magique pour sortir de prison");
+                playerManager.getCurrentPlayer().getCards().RemoveAt(0);
+            }
+            
+        }
+
+        public static int[] rollDices()
+        {
+            int dice1 = random.Next(1, 6);
+            int dice2 = random.Next(1, 6);
+
+            int[] res = { dice1, dice2 };
+            return res;
         }
 
         public void freePlayerRollDice(int[] dices, bool jailedOut)
@@ -158,8 +200,8 @@ namespace Monopoly.controller
                 playerManager.moovePlayer(playerManager.getCurrentPlayer(), dices[0] + dices[1]);
 
                 Form_board.GetInstance.insert_console(playerManager.getCurrentPlayer().getName() + " est atterit sur la case : ");
-                playerManager.getCurrentPlayer().getLocation().describe();
 
+                
                 if (playerManager.getCurrentPlayer().getLocation().getProperty() != null)
                 {
                     landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
@@ -258,38 +300,6 @@ namespace Monopoly.controller
 
         }
 
-        public void clickEndTurn()
-        {
-            if (dicesRolled)
-                NextTurn();
-            else
-                Form_board.GetInstance.insert_console("Vous êtes obligé de lancer les dés pour finir votre tour");
-        }
-
-        public void clickMortgage(int index)
-        {
-            Property p = boardManager.getBoard()[index].getProperty();
-            askMortgage(p.getOwner(), p);
-        }
-
-        public void clickUnMortgage(int index)
-        {
-            Property p = boardManager.getBoard()[index].getProperty();
-            askUnMortgage(p.getOwner(), p);
-        }
-
-        public void clickBuyHouse(int index)
-        {
-            Property p = boardManager.getBoard()[index].getProperty();
-            buyHouse(p.getOwner(), (PrivateProperty)p);
-        }
-
-        public void clickSellHouse(int index)
-        {
-            Property p = boardManager.getBoard()[index].getProperty();
-            sellHouse(p.getOwner(), (PrivateProperty)p);
-        }
-
         //Send a player to jail
         public void sendToJail(Player player)
         {
@@ -314,6 +324,9 @@ namespace Monopoly.controller
                 {
                     payPrivateRent(player, property);
                 }
+            }else if(property.getOwner() == player)
+            {
+                Form_board.GetInstance.insert_console("Cette propriété vous appartient");
             }
             else
             {
