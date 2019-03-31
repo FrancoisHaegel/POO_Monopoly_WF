@@ -31,6 +31,8 @@ namespace Monopoly
             foreach (model.Player player in GameManager.GetInstance.playerManager.getPlayers())
             {
                 addJoueur(player.getName(), player.Color);
+                jetons[player.Color] = reserveJetons[player.Color];
+                setJetonIndex(player.Color, 0);
             }
         }
 
@@ -50,9 +52,9 @@ namespace Monopoly
         DirectoryInfo dice_images_directory = new DirectoryInfo(".\\Resources\\");
         List<Image> dice_images = new List<Image>();
         int index = 0;
-        
+
         // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
-        Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>()
+        Dictionary<Color, int[]> reserveJetons = new Dictionary<Color, int[]>()
         {
             {Color.DarkOrange, new int[] {0, 0, 20} },
             {Color.MediumTurquoise, new int[] { 0, 0, 20 } },
@@ -60,31 +62,17 @@ namespace Monopoly
             {Color.Gold, new int[] { 0, 0, 20 } },
             {Color.RoyalBlue, new int[] { 0, 0, 20 } },
             {Color.LightPink, new int[] { 0, 0, 20 } },
-            {Color.Black, new int[] { 0, 0, 20 } },
+            {Color.Beige, new int[] { 0, 0, 20 } },
         };
+
+        // Dictionaires des 6 jetons du jeux qui associe à une couleur de jeton une liste d'entier [coordonee_X, coordonee_Y, rayon]
+        Dictionary<Color, int[]> jetons = new Dictionary<Color, int[]>();
 
         Dictionary<String, Tuple<Color, int>> joueurs = new Dictionary<String, Tuple<Color, int>>();
 
         Dictionary<String, int> index_proprietes = new Dictionary<String, int>();
 
         Dictionary<String, List<Tuple<String, Color, int, int>>> proprietes = new Dictionary<String, List<Tuple<String, Color, int, int>>>();
-
-
-        private void init_test()
-        {
-            /*
-            addJoueur("Francois", Color.DarkOrange);
-            addJoueur("Bruno", Color.MediumTurquoise);
-            addJoueur("Nathan", Color.MediumSeaGreen);
-            addJoueur("Ching", Color.Gold);
-            addJoueur("Chang", Color.RoyalBlue);
-            addJoueur("Chong", Color.LightPink);
-            */
-
-            addPropriete("Francois", "Elsau", Color.Gold, 2);
-            //addPropriete("Francois", "Aloutettes", Color.Gold, 1);
-            //addPropriete("Francois", "Gare", Color.Blue, 3);
-        }
 
         // Affiche les images des des correspondants au entier donne
         public void showDices(int dice_A, int dice_B)
@@ -317,7 +305,7 @@ namespace Monopoly
 
         private void button_out_of_jail_Click(object sender, EventArgs e)
         {
-            init_test();
+
         }
 
         private void button_mortage_Click(object sender, EventArgs e)

@@ -38,7 +38,7 @@ namespace Monopoly
             {"Jaune", Color.Gold },
             {"Bleu", Color.RoyalBlue },
             {"Rose", Color.LightPink },
-            {"Noir", Color.Black}
+            {"Beige", Color.Beige}
         };
 
         List<ComboBox> comboBoxes = new List<ComboBox>();
