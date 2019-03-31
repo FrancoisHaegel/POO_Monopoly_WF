@@ -68,6 +68,11 @@ namespace Monopoly.model
             return cards;
         }
 
+        public void setId(int i)
+        {
+            id = i;
+        }
+
         public void resetTurnInJail()
         {
             turnInJail = 0;
