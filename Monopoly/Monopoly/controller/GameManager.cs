@@ -693,72 +693,72 @@ namespace Monopoly.controller
             switch (id)
             {
                 case 0:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(0).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), boardManager.getStart());
+                    MessageBox.Show(cardManager.getChanceCard(0).getDescription());
                     break;
                 case 1:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(1).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), BoardManager.getTile(11));
                     landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
+                    MessageBox.Show(cardManager.getChanceCard(1).getDescription());
                     break;
                 case 2:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(2).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), BoardManager.getTile(24));
                     landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
+                    MessageBox.Show(cardManager.getChanceCard(2).getDescription());
                     break;
                 case 3:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(3).getDescription());
                     mooveToNext(playerManager.getCurrentPlayer(), Property.PropType.UTILITY);
+                    MessageBox.Show(cardManager.getChanceCard(3).getDescription());
                     break;
                 case 4:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(4).getDescription());
                     mooveToNext(playerManager.getCurrentPlayer(), Property.PropType.RAILROAD);
+                    MessageBox.Show(cardManager.getChanceCard(4).getDescription());
                     break;
                 case 5:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(5).getDescription());
                     mooveToNext(playerManager.getCurrentPlayer(), Property.PropType.RAILROAD);
+                    MessageBox.Show(cardManager.getChanceCard(5).getDescription());
                     break;
                 case 6:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(6).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 50);
+                    MessageBox.Show(cardManager.getChanceCard(6).getDescription());
                     break;
                 case 8:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(8).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), -3);
 
                     //on reprend 200 car moove player donne 200 si la nouvelle position est inférieur à l'ancienne
                     playerManager.takeMoney(playerManager.getCurrentPlayer(), 200);
+                    MessageBox.Show(cardManager.getChanceCard(8).getDescription());
                     break;
                 case 9:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(9).getDescription());
                     sendToJail(playerManager.getCurrentPlayer());
                     NextTurn();
+                    MessageBox.Show(cardManager.getChanceCard(9).getDescription());
                     break;
                 case 10:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(10).getDescription());
                     generalRepairs(playerManager.getCurrentPlayer(), 25, 100);
+                    MessageBox.Show(cardManager.getChanceCard(10).getDescription());
                     break;
                 case 11:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(11).getDescription());
                     payTax(playerManager.getCurrentPlayer(), 15);
+                    MessageBox.Show(cardManager.getChanceCard(11).getDescription());
                     break;
                 case 12:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(12).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), BoardManager.getTile(5));
                     landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
+                    MessageBox.Show(cardManager.getChanceCard(12).getDescription());
                     break;
                 case 13:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(13).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), BoardManager.getTile(39));
                     landOnProperty(playerManager.getCurrentPlayer(), playerManager.getCurrentPlayer().getLocation().getProperty());
+                    MessageBox.Show(cardManager.getChanceCard(13).getDescription());
                     break;
                 case 14:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(13).getDescription());
                     payEachPlayer(playerManager.getCurrentPlayer(), 50);
+                    MessageBox.Show(cardManager.getChanceCard(13).getDescription());
                     break;
                 case 15:
-                    Form_board.GetInstance.insert_console(cardManager.getChanceCard(15).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 150);
+                    MessageBox.Show(cardManager.getChanceCard(15).getDescription());
                     break;
             }
         }
@@ -768,65 +768,65 @@ namespace Monopoly.controller
             switch (id)
             {
                 case 0:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(0).getDescription());
                     sendToJail(playerManager.getCurrentPlayer());
                     NextTurn();
+                    MessageBox.Show(cardManager.getCommunityCard(0).getDescription());
                     break;
                 case 1:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(1).getDescription());
                     generalRepairs(playerManager.getCurrentPlayer(), 40, 115);
+                    MessageBox.Show(cardManager.getCommunityCard(1).getDescription());
                     break;
                 case 2:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(2).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 100);
+                    MessageBox.Show(cardManager.getCommunityCard(2).getDescription());
                     break;
                 case 3:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(3).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 200);
+                    MessageBox.Show(cardManager.getCommunityCard(3).getDescription());
                     break;
                 case 4:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(4).getDescription());
                     payTax(playerManager.getCurrentPlayer(), 150);
+                    MessageBox.Show(cardManager.getCommunityCard(4).getDescription());
                     break;
                 case 5:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(5).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 20);
+                    MessageBox.Show(cardManager.getCommunityCard(5).getDescription());
                     break;
                 case 6:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(6).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 100);
+                    MessageBox.Show(cardManager.getCommunityCard(6).getDescription());
                     break;
                 case 7:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(7).getDescription());
                     payTax(playerManager.getCurrentPlayer(), 50);
+                    MessageBox.Show(cardManager.getCommunityCard(7).getDescription());
                     break;
                 case 9:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(9).getDescription());
                     playerManager.moovePlayer(playerManager.getCurrentPlayer(), boardManager.getStart());
+                    MessageBox.Show(cardManager.getCommunityCard(9).getDescription());
                     break;
                 case 10:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(10).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 45);
+                    MessageBox.Show(cardManager.getCommunityCard(10).getDescription());
                     break;
                 case 11:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(11).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 100);
+                    MessageBox.Show(cardManager.getCommunityCard(11).getDescription());
                     break;
                 case 12:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(12).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 25);
+                    MessageBox.Show(cardManager.getCommunityCard(12).getDescription());
                     break;
                 case 13:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(13).getDescription());
                     collectFromEachPlayer(playerManager.getCurrentPlayer(), 50);
+                    MessageBox.Show(cardManager.getCommunityCard(13).getDescription());
                     break;
                 case 14:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(14).getDescription());
                     payTax(playerManager.getCurrentPlayer(), 100);
+                    MessageBox.Show(cardManager.getCommunityCard(14).getDescription());
                     break;
                 case 15:
-                    Form_board.GetInstance.insert_console(cardManager.getCommunityCard(15).getDescription());
                     playerManager.giveMoney(playerManager.getCurrentPlayer(), 100);
+                    MessageBox.Show(cardManager.getCommunityCard(15).getDescription());
                     break;
             }
         }
